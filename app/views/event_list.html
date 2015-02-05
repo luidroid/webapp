@@ -1,0 +1,60 @@
+<legend>
+  <h2><span ng-bind="::translation.title"></span></h2>
+</legend>
+
+<div class="row-fluid">
+  <div class="span12">    
+    <!-- Messages template -->
+    <div ng-include="'views/message_template.html'"></div>
+    
+    <p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</p>
+        
+    <div class="widget" ng-hide="isEmpty">
+      <div class="widget-header">
+        <i class="icon-list-alt"></i>
+        <h3 ng-bind="::translation.legend"></h3>
+        <ul class="commands pull-right">
+           <li class="divider"></li>
+           <li><a href="" ng-click="refreshEvents()"><i class="icon-refresh"></i><span ng-bind="::translation.refreshButton"></span></a></li>
+        </ul>
+      </div>
+      <div class="widget-table">
+        <div class="widget-content">
+         <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy'>
+          <table class="table table-hover">
+            <thead>
+              <th ng-bind="::translation.counter"></th>
+              <th ng-bind="::translation.timestamp"></th>
+              <th ng-bind="::translation.priority"></th>     
+              <th ng-bind="::translation.source"></th> 
+              <th ng-bind="::translation.groups"></th>   
+              <th ng-bind="::translation.loglevel"></th> 
+              <th ng-bind="::translation.messageId"></th>               
+              <th ng-bind="::translation.message"></th>
+              <th ng-bind="::translation.entries"></th>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in items">
+              <td ng-bind="::item.id"></td>
+              <td ng-bind="::item.timestamp"></td>                                            
+              <td ng-bind="::item.priority"></td>
+              <td ng-bind="::item.source"></td>
+              <td ng-bind="::item.groups"></td>
+              <td ng-bind="::item.logLevelValue"></td>
+              <td ng-bind="::item.messageId"></td>                                            
+              <td ng-bind="::item.message"></td>
+              <td><ul ng-repeat="entry in item.entries">
+                <li>{{::entry.name}}: {{::entry.value}}</li>
+              </ul> 
+           </td>
+              </tr>               
+            </tbody>
+          </table>
+          <div ng-show="busy"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</div>       
+        </div>        
+       </div>    
+      </div>
+    </div>
+                               
+  </div>
+</div>

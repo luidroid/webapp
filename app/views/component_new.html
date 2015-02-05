@@ -1,0 +1,86 @@
+<legend>
+	<h2><span ng-bind="::translation.title"></span></h2>
+</legend>
+
+<div class="row-fluid">
+	<div class="span12">
+
+		<div class="well well-kabaWhite">
+			<div class="span12">				 
+				<form class="form-inline">
+				  <div class="form-group">
+				    <label for="inputNetwork" ng-bind="::translation.openNetwork"></label>
+					<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="wnetwork" ng-click="toggle()"></div>
+				  	<span ng-show="wnetwork">
+					    <span ng-bind="::translation.openParenthesis"></span>
+					  	<timer end-time="endTime" autostart="false">{{hours}} <span ng-bind="::translation.hours"></span> {{minutes}} <span ng-bind="::translation.minutes"></span> {{seconds}} <span ng-bind="::translation.seconds"></span></timer>
+					 </span>
+				  </div>				  
+				</form>
+			</div>
+		</div>
+
+		<!-- Messages template -->
+		<div ng-include="'views/message_template.html'"></div>
+		
+		<!-- Ajax loader -->
+		<p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Searching"><span ng-bind="::translation.searching"></span></p>
+		
+		<div ng-model="isEmpty" ng-hide="isEmpty">
+			<form name="form" class="form-horizontal"  ng-submit="submit()" novalidate>		
+				<div class="widget">
+				  <div class="widget-header">
+				    <i class="icon-th-large"></i>
+				    <h3 ng-bind="::translation.availableComponents"></h3>
+				  </div>
+				  <div class="widget-table">
+				    <div class="widget-content">
+				      <table class="table">
+				        <thead>
+				        	<th>
+				        		<label class="checkbox inline">
+								  <input type="checkbox" ng-click="checkAll()" ng-checked="isChecked()">
+								  <span ng-bind="::translation.allComponents"></span>
+								</label>
+				        	</th>
+				        	<th ng-bind="::translation.name"></th>
+				        	<th ng-bind="::translation.type"></th>
+				        	<th ng-bind="::translation.mac"></th>
+				        	<th ng-bind="::translation.wirelessAddress"></th>
+				        	<th ng-bind="::translation.guid"></th>
+				        <!-- 	<th ng-bind="::translation.actions"></th>  -->
+				        </thead>
+				        <tbody>
+				          <tr ng-repeat="component in components">
+				        	<td><input type="checkbox" ng-model="component.checked"></td>
+				        	<td>
+				        		<ng-form name="nameForm">
+					        		<div class="control-group" ng-class="{ 'error' : nameForm.name.$invalid && nameForm.name.$dirty || component.error }">
+						        		<input type="text" name="name" placeholder="{{::translation.name_placeholder}}" ng-model="component.name" ng-model-options="{ debounce: 200 }" ng-maxlength="{{::rules.maxlength}}">
+						        		<span class="help-inline text-error" ng-show="nameForm.name.$error.maxlength" ng-bind="::translation.maxlength"></span>
+						        		<span id="{{component.id}}" class="help-inline text-error" ng-bind="component.error"></span>
+					        		</div>	
+				        		</ng-form>
+				        	</td>
+				        	<td><p ng-bind="::component.type"></p></td>
+				        	<td><p ng-bind="component.id"></p></td>
+				        	<td><p ng-bind="::component.wirelessAddress"></p></td>
+				        	<td><p ng-bind="::component.guid"></p></td> 	 	
+				        	<!--  <td>
+				        		<a href="" class="btn btn-warning" ng-click="identify(component.id,$index)" ng-bind="::translation.identifyButton"></a>
+				        	</td> -->
+				          </tr>			          
+				        </tbody>
+				      </table>
+				    </div>	    
+				  </div>
+				</div>
+				<div class="control-group">				
+					<button class="btn" ng-click="cancel()" ng-bind="::translation.cancelButton"></button>
+					<button id="saveButton" class="btn btn-custom-lighten" ng-disabled="form.$invalid || !allChecked" ng-bind="::translation.saveButton"></button>	
+				</div> 			
+			</form>
+		</div>	
+			
+	</div>
+</div>

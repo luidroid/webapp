@@ -8,7 +8,156 @@
  *
  * Main module of the application.
  */
+var underscore = angular.module('underscore', []);
+underscore.factory('_', function() {
+	return window._; // assumes underscore has already been loaded on the page
+});
 angular
   .module('webApp', [
-    'ngMessages'
-  ]);
+    'ngMessages', 'ui.router', 'easypiechart','infinite-scroll','toggle-switch','underscore','angularFileUpload','timer','ngProgress'
+  ])
+  .constant('HttpStatus', {
+	'FORBIDDEN' : 403
+  })
+  .constant('Roles', {
+	'ADMIN' : 'admin',
+  })
+  .config(function($stateProvider, $urlRouterProvider) {
+  	 // For any unmatched url, redirect to /login
+	 $urlRouterProvider.otherwise('/login');
+	  
+	 // Set up the states
+	 $stateProvider
+	    .state('login', {
+	       url: '/login',
+	       templateUrl: 'views/login.html',
+	       controller: 'LoginCtrl'
+	    })
+	    .state('home', {
+	       url: '/home',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@home': { 
+	            	templateUrl: 'views/dashboard.html',
+	            	controller: 'DashboardCtrl'
+	            }
+	       }
+	    })
+	    .state('components', {
+	       url: '/components',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@components': { 
+	            	templateUrl: 'views/component_list.html',
+	            	controller: 'ComponentListCtrl'
+	            }
+	       }
+	    })
+	    .state('components.new', {
+	       url: '/new',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html'
+	            },
+	            'content@components': { 
+	            	templateUrl: 'views/component_new.html',
+	            	controller: 'ComponentNewCtrl'
+	            }
+	       }
+	    })
+	    .state('components.edit', {
+	       url: '/edit/:id',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html'
+	            },
+	            'content@components': { 
+	            	templateUrl: 'views/component_edit.html',
+	            	controller: 'ComponentEditCtrl'
+	            }
+	       }
+	    })
+	    .state('components.details', {
+	       url: '/:id',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html'
+	            },
+	            'content@components': { 
+	            	templateUrl: 'views/component_details.html',
+	            	controller: 'ComponentDetailsCtrl'
+	            }
+	       }
+	    })
+	    .state('events', {
+	       url: '/events',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@events': { 
+	            	templateUrl: 'views/event_list.html',
+	            	controller: 'EventListCtrl'
+	            }
+	       }
+	    })
+	    .state('network', {
+	       url: '/network',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@network': { 
+	            	templateUrl: 'views/network.html',
+	            	controller: 'NetworkCtrl'
+	            }
+	       }
+	    })
+	    .state('wnetwork', {
+	       url: '/wnetwork',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@wnetwork': { 
+	            	templateUrl: 'views/wnetwork.html',
+	            	controller: 'WirelessNetworkCtrl'
+	            }
+	       }
+	    })
+	    .state('certificate', {
+	       url: '/certificate',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@certificate': { 
+	            	templateUrl: 'views/certificate.html',
+	            	controller: 'CertificateCtrl'
+	            }
+	       }
+	    })
+	    .state('password', {
+	       url: '/password',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@password': { 
+	            	templateUrl: 'views/password.html',
+	            	controller: 'PasswordCtrl'
+	            }
+	       }
+	    });
+  });

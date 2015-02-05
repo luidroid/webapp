@@ -1,0 +1,39 @@
+<div class="login-page">
+  <div class="login-content">
+    <div class="brandbar"><a class="brand"></a></div>
+    <div class="login-form">
+      <div class="row-fluid">
+        <div class="span8">
+          <div class="login-hero">
+            <p ng-bind="translation.title"></p>
+          </div>
+        </div>
+        <div class="span4">
+          <form name="form" class="form-hideLabels" ng-submit="submit()" novalidate>
+            <legend ng-bind="translation.legend"></legend>
+            <div ng-show="errorMsg" class="text-kabaRed" ng-bind="translation.errorMsg"></div>
+            <div class="fields">
+              <!-- <label class="hideable" for="username" ng-bind="translation.username"></label> -->
+              <input class="span12" name="username" type="text", placeholder="{{translation.username}}" ng-model="user.username" />
+              <!-- <label class="hideable" for="password" ng-bind="translation.password"></label> -->
+              <input class="span12" name="password" type="password" placeholder="{{translation.password}}" ng-model="user.password" />
+            </div>
+            <div class="login-actions">
+              <button class="btn" ng-bind="translation.button"></button>
+            </div>
+          </form>
+        </div> 
+      </div>
+    </div>
+  </div>
+
+ <!-- Select language -->
+  <div class="pull-right">
+   <div class="input-prepend">
+      <span class="add-on"><i class="icon-globe"></i></span>
+      <select ng-model="selectedOption" ng-options="option.name for option in options" ng-change="translate()"></select> 
+   </div>
+  </div> <!-- End: Select language -->
+
+</div>
+<!-- <script src="scripts/kesign.js"></script> -->

@@ -1,0 +1,35 @@
+<div class="alert alert-block alert-error" ng-show="isError">
+  <h4 ng-bind="title"></h4>
+  <ul>
+	  <li ng-repeat="error in errors">
+	    <p ng-bind="error"></p>
+	  </li>
+  </ul>
+</div>
+  	
+<div class="alert alert-block" ng-show="isWarning">
+  <h4 ng-bind="title"></h4>
+  <ul>
+	  <li ng-repeat="warning in warnings">
+	    <p ng-bind="warning"></p>
+	  </li>
+  </ul>
+</div>
+
+<div class="alert alert-block alert-info" ng-show="isInfo">
+  <h4 ng-bind="title"></h4>
+  <ul>
+	  <li ng-repeat="info in infos">
+	    <p ng-bind="info"></p>
+	  </li>
+  </ul>
+</div>
+
+<div class="alert alert-block alert-success" ng-show="isSuccess">
+  <h4 ng-bind="title"></h4>
+  <ul>
+	  <li ng-repeat="message in messages">
+	    <p ng-bind="message"></p>
+	  </li>
+  </ul>
+</div>

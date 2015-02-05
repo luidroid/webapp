@@ -1,0 +1,127 @@
+<legend>
+	<h2>
+		<span ng-bind="::translation.title"></span><span ng-bind="::component.name"></span>
+		<span class="pull-right" ng-hide="isError">
+ 
+			<button id="identifyButton" class="btn btn-large btn-warning" type="button" ng-click="identify()"
+																						ng-disabled="isDisabled"
+																						ng-bind="translation.button.identifyButton"
+																						ng-show="isAdmin">
+		    </button>
+			<a ng-href="#/components/edit/{{component.id}}" class="btn btn-custom-lighten btn-large" type="button" ng-bind="::translation.button.editButton" ng-show="isAdmin"></a>
+			<!-- Button to trigger modal -->
+			<a role="button" class="btn btn-large btn-danger" data-toggle="modal" data-target="#deleteModal" ng-bind="::translation.button.removeButton" ng-show="isAdmin"></a>
+		</span>
+	</h2>
+</legend>
+
+<div class="row-fluid">	
+	<!-- Messages template -->
+	<div ng-include="'views/message_template.html'"></div>
+</div>
+
+<div class="row-fluid" ng-hide="isError">
+  
+	<!-- Info -->
+	<div class="span4">
+		<div class="widget">
+			<div class="widget-header">
+				<i class="icon-info-sign"></i>
+				<h3 ng-bind="::translation.information.legend"></h3>
+			</div>
+			<div class="widget-content">
+			     <dt ng-bind="::translation.information.name"></dt>
+			      <dd ng-bind="::component.name"></dd>
+			     <dt ng-bind="::translation.information.mac"></dt>
+			      <dd ng-bind="::component.id"></dd>
+			     <dt ng-bind="::translation.information.address"></dt>
+			      <dd ng-bind="::component.wirelessAddress"></dd>
+			     <dt ng-bind="::translation.information.guid"></dt>
+			      <dd ng-bind="::component.guid"></dd>
+			     <dt ng-bind="::translation.information.status"></dt>
+			      <dd ng-bind="::component.status"></dd>
+			    <!--  <dt ng-bind="translation.information.channel"></dt>
+			      <dd>TBD</dd> -->
+			</div>
+		</div>
+	</div> <!-- End: Info -->
+	
+	<!--Battery -->
+	<div class="span4"> <!-- Other info -->
+		<div class="widget" ng-hide="isBatteryAvailable">
+			<div class="widget-header">
+				<i class="icon-tint"></i>
+				<h3 ng-bind="::translation.battery.legend"></h3>
+			</div>
+			<div class="widget-content">
+				<div class="span6">
+				  <dt ng-bind="::translation.battery.type"></dt>
+			      <dd ng-bind="::component.battery.type"></dd>
+			      <dt ng-bind="::translation.battery.status"></dt>
+			      <dd><span ng-bind="::component.battery.percent"></span><span ng-bind="::translation.percent"></span></dd>
+			      <dd class="label label-important" ng-bind="::component.battery.alarmLowBattery"></dd>
+				</div>	
+				<div class="span6"><div id="batteryContainer"></div></div>			         
+			</div>
+		</div>
+	</div> <!-- End: Battery -->
+	
+	<!-- Signal -->
+	<div class="span4"> 
+		<div class="widget">
+			<div class="widget-header">
+				<i class="icon-signal"></i>
+				<h3 ng-bind="::translation.signal.legend"></h3>
+			</div>
+			<div class="widget-content">
+				<div class="span6">
+				   <dt ng-bind="::translation.signal.rssi"></dt>
+				   	<dd><span ng-bind="::component.signal.rssi"></span></dd>
+				</div>
+				<div class="span6"> <div id="signalContainer"></div></div>				   
+			</div>
+		</div>
+	</div>  <!-- End: Signal -->
+	
+</div>
+ <!--
+<div class="row-fluid" ng-hide="isError">
+		
+	<div class="span4"> 
+		<div class="widget">
+			<div class="widget-header">
+				<i class="icon-hdd"></i>
+				<h3 ng-bind="translation.os.legend"></h3>
+			</div>
+			<div class="widget-content">
+				<dt ng-bind="translation.os.fwVersion"></dt>
+			      <dd>TBD</dd>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span4"> 
+		<div class="widget">
+			<div class="widget-header">
+				<i class="icon-download-alt"></i>
+				<h3 ng-bind="translation.update_legend"></h3>
+			</div>
+			<div class="widget-content">
+				 <dt ng-bind="translation.update_available"></dt>
+		      		<dd>TBD</dd>
+		      	<a class="btn btn-default" type="button" ng-bind="translation.updateButton"></a>
+			</div>
+		</div>
+	</div> 
+	
+	<div class="span4"> 
+		
+	</div> 
+</div> -->
+
+<!-- Modal -->
+<div ng-include="'views/delete_component_template.html'"></div>
+<!--
+<script src="scripts/battery.js"></script>
+<script src="scripts/signal.js"></script>
+-->

@@ -1,0 +1,60 @@
+<legend>
+	<h2>
+		<span ng-bind="::translation.title"></span>
+		<!--  Add new components -->
+		<span class="pull-right">
+				<a ui-sref="components.new" class="btn btn-large btn-success" type="button" ng-bind="::translation.newButton" ng-show="isAdmin"></a>
+		</span>	
+	</h2>
+</legend>
+
+<div class="row-fluid">
+    <div class="span12">
+    	<!-- Commission message -->
+    	<div class="alert alert-block alert-success" ng-show="isCommission">
+		  <h4 ng-bind="::translation.commissionTitle"></h4>
+		  <ul><li ng-bind="::translation.commissionMsg"></li></ul>
+		</div>
+		
+    	<!-- Messages template -->
+		<div ng-include="'views/message_template.html'"></div>
+    	    	
+    	<!-- Ajax Loader -->
+    	<p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Loading"><span ng-bind="::translation.loading"></span></p>
+
+		<div class="widget" ng-show="isAvailable">
+		  <div class="widget-header">
+		    <i class="icon-th-large"></i>
+		    <h3 ng-bind="translation.joinedComponents"></h3>
+		  </div>
+		  <div class="widget-table">
+		    <div class="widget-content">
+		      <table class="table table-hover">
+		        <thead>
+		        	<th><a href="" ng-click="predicate = 'name'; reverse=!reverse" ng-bind="::translation.name"></a></th>
+		        	<th><a href="" ng-click="predicate = 'id'; reverse=!reverse" ng-bind="::translation.mac"></a></th>
+		        	<th ng-bind="::translation.wirelessAddress"></th>
+		        	<th ng-bind="::translation.guid"></th>
+		        	<th ng-bind="::translation.signal"></th>
+		        	<th ng-bind="::translation.battery"></th> 
+		        	<th><a href="" ng-click="predicate = 'status'; reverse=!reverse" ng-bind="::translation.status"></a></th>        	
+		        	<th ng-bind="::translation.actions"></th> 
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="component in components | orderBy:predicate:reverse">
+		        	<td ng-bind="::component.name"></td>
+		        	<td ng-bind="::component.id"></td>			        	
+		        	<td ng-bind="::component.wirelessAddress"></td>
+		        	<td><p ng-bind="::component.guid"></p></td> 	
+		        	<td ng-bind="::component.signal.strength"></td>
+		        	<td><span ng-bind="::component.battery.percent"></span><span class="label label-important" ng-bind="::component.battery.alarmLowBattery"></span></td>
+		        	<td ng-bind="component.status"></td>          			        	  
+		        	<td><a ng-href="#/components/{{component.id}}" class="btn btn-warning" ng-bind="::translation.showDetailsButton"></a></td>		        	
+		          </tr>			          
+		        </tbody>
+		      </table>
+		    </div>	    
+		  </div>
+		</div> 					
+	</div>	
+</div>

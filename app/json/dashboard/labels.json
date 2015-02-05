@@ -1,0 +1,21 @@
+{ 
+	"gateway" : {
+		"legend" : "Gateway information",
+		"datetime" : "Current Date/Time",
+		"id" : "Wireless mac address",
+		"hw" : "Hardware version",
+		"fw" : "Firmware version",
+		"os" : "OS version"
+	},
+	"usage" : {
+		"legend" : "Usage",
+		"components" : "Wireless components",
+		"routers" : "Wireless extenders"
+	},
+	"wnetwork" : {
+		"legend" : "Wireless network"
+	},
+	"common" : {
+		"loading" : " Loading"
+	}
+}

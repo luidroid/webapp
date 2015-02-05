@@ -1,0 +1,57 @@
+<legend>
+	<h2>
+		<span ng-bind="::translation.title"></span><span ng-bind="component.name"></span>
+	</h2>
+</legend>
+
+<div class="row-fluid">
+	<div class="span12">
+		<!-- Messages template -->
+		<div ng-include="'views/message_template.html'"></div>
+			
+		<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
+			<!--  Original
+			<div class="control-group" ng-class="{ 'error' : form.name.$invalid && form.name.$dirty || errorFields.name}">
+				<label for="inputName" class="control-label" ng-bind="::translation.name"></label>
+				<div class="controls">
+					<input type="text" name="name" placeholder="{{::translation.name_placeholder}}" ng-model="name" ng-model-options="{ debounce: 300 }" ng-change="clean()" dyn-maxlength={{rules.maxlength}}>	
+					<span class="help-inline text-error" ng-show="form.name.$error.maxlength" ng-bind="::translation.maxlength"></span> 
+					<span class="help-inline" ng-bind="errorFields.name"></span>
+				</div>
+			</div>  -->	
+			
+			<div class="control-group" ng-class="{ 'error' : form.name.$invalid && form.name.$dirty || errorFields.name}">
+				<label for="inputName" class="control-label" ng-bind="::translation.name"></label>
+				<div class="controls">
+					<input type="text" name="name" placeholder="{{::translation.name_placeholder}}" ng-model="name" ng-model-options="{ debounce: 200 }" ng-change="clean()" dyn-maxlength={{::rules.maxlength}}>	
+				  	<span class="help-inline" ng-messages="form.name.$dirty && form.name.$error">
+     					<span ng-message="maxlength">{{::translation.maxlength}}</span>
+   					</span>
+					<span class="help-inline" ng-bind="errorFields.name"></span>
+				</div>
+			</div>
+			
+			<!--  Communication channel
+			<div class="control-group">
+				<label for="inputChannel" class="control-label" ng-bind="translation.channel"></label>
+				<div class="controls">
+					<select>
+					  <option value="channel1">Channel 1</option>
+					  <option value="channel2">Channel 2</option>
+					  <option value="channel3">Channel 3</option>
+					</select>
+					<!--<select ng-model="selectedOption" ng-options="option.name for option in options"></select>  -->		      
+			<!--  </div>
+			</div>
+				-->	
+			<div class="control-group">
+				<div class="controls">
+					<button class="btn" ng-click="cancel()" ng-bind="::translation.cancelButton"></button>
+					<button id="saveButton" type="submit" class="btn btn-custom-lighten" ng-disabled="form.$invalid" ng-bind="::translation.saveButton"></button>
+				</div>
+			</div>
+		</form>	
+	</div>
+</div>
+
+

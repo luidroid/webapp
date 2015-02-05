@@ -1,0 +1,81 @@
+<div class="row-fluid" id="sample-widget">
+    <div class="span8"> <!-- Information-->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="icon-info-sign"></i>
+
+                <h3 ng-bind="::translation.gateway.legend"></h3>
+            </div>
+
+            <div class="widget-content">       
+                <!--<dt ng-bind="::translation.gateway.datetime"></dt>
+                <dd ng-bind="::gateway.datetime"></dd>-->
+                <dt ng-bind="::translation.gateway.id"></dt>
+                <dd ng-bind="::gateway.id"></dd>
+                <dt ng-bind="::translation.gateway.hw"></dt>
+                <dd ng-bind="::gateway.hardwareVersion"></dd>
+                <dt ng-bind="::translation.gateway.fw"></dt>
+                <dd ng-bind="::gateway.firmwareVersion"></dd>
+                <dt ng-bind="::translation.gateway.os"></dt>
+                <dd ng-bind="::gateway.osVersion"></dd>
+            </div>
+        </div>
+    </div> <!-- End: Information-->
+
+    <div class="span4"> <!-- Usage-->
+        <div class="widget">
+            <div class="widget-header">
+                <i class="icon-adjust"></i>
+                <h3 ng-bind="::translation.usage.legend"></h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <span class="chart" easypiechart percent="componentPercent" options="componentOptions">
+                            <span class="percent" ng-bind="::usage.component.text"></span>
+                        </span>     
+                    </div>
+                    <!-- Router chart 
+                    <div class="span6"> 
+                        <span class="chart" easypiechart percent="router.percent" options="router_options">
+                            <span class="percent" ng-bind="usage.router.text"></span>
+                        </span>
+                    </div>
+                     -->
+                </div>
+                
+                <div class="row-fluid">
+                    <div class="span6">
+                        <p class="textcenter"><strong ng-bind="::translation.usage.components"></strong></p>
+                    </div>
+                    <!-- Router label 
+                    <div class="span6"> 
+                        <p class="textcenter"><strong ng-bind="translation.usage_routers"></strong></p>
+                    </div> 
+                    -->
+                </div>               	
+            </div>
+        </div>
+    </div> <!-- End: Usage-->
+</div>
+
+<div class="row-fluid" id="sample-widget-commands"> <!-- Wireless network-->
+    <div class="span12">
+        <div class="widget">
+            <div class="widget-header">
+                &nbsp;&nbsp;&nbsp;
+				<i class="fa fa-wifi fa-lg"></i>				
+				<h3 ng-bind="::translation.wnetwork.legend"></h3>
+            </div>
+
+            <div class="widget-content">
+                <!-- Ajax Loader -->
+    			<p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</p>
+    			<!-- Wireless Network -->
+				<!--<canvas id="canvas"></canvas>-->
+                <div id="container"></div>
+            </div>
+        </div>
+    </div>
+</div> <!-- End: Wireless network-->

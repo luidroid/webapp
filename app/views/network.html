@@ -1,0 +1,48 @@
+<div class="row-fluid">
+	<div ng-include="'views/message_template.html'"></div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="well well-kabaWhite">
+			<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
+				<legend ng-bind="::translation.legend"></legend>
+				<!--
+				<div class="control-group" ng-class="{ error : errorFields.upnp }"><p></p>
+					<label for="inputName" class="control-label" ng-bind="::translation.upnp"></label>
+					<div class="controls">
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.upnp" ng-click="toggle()" ng-disabled="!isAdmin"></div>
+						<span class="help-inline" ng-hide="network.upnp">
+							<span class="label label-warning" ng-bind="::translation.upnpMessage"></span>
+						</span>
+						<span class="help-inline" ng-bind="errorFields.upnp"></span>			      
+					</div>
+				</div>-->
+
+				<div class="control-group" ng-class="{ error : errorFields.dhcp }">
+					<label for="inputName" class="control-label" ng-bind="::translation.dhcp"></label>
+					<div class="controls">
+						<!--<div toggle-switch ng-model="network.dhcp" on-label="{{::translation.on}}" off-label="{{::translation.off}}" ng-disabled="!isAdmin"></div>-->
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.dhcp" ng-click="toggle()" ng-disabled="!isAdmin"></div>
+						<span class="help-inline" ng-bind="errorFields.dhcp"></span>			      
+					</div>
+				</div>	
+				
+				<div class="control-group" ng-class="{ error : errorFields.ipAddress }">
+					<label for="inputIpAddress" class="control-label" ng-bind="::translation.ipAddress"></label>
+					<div class="controls">
+						<input type="text" name="ipAddress" placeholder="{{::translation.ipAddress_placeholder}}" ng-model="network.ipAddress" ng-model-options="{ debounce: 300 }" ng-change="clean()" ng-disabled="!isAdmin">
+						<span class="help-inline" ng-bind="errorFields.ipAddress"></span>
+					</div>
+				</div>
+							
+				<div class="control-group">
+					<div class="controls">
+						<button id="saveButton" type="submit" class="btn btn-custom-lighten" ng-bind="::translation.saveButton" ng-show="isAdmin"></button>
+					</div>
+				</div>
+			</form>
+		</div>	
+	</div>
+</div>
+
+

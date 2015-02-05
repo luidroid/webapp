@@ -1,23 +1,95 @@
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<header class="header header-fixed-top">
+        <div class="header-inner">
+            <div class="brandbar brandbar-xsmall collapse in">
+                <a class="brand" ui-sref="home"></a>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
+                <div class="statusbar pull-right">
+                    <strong ng-bind="::translation.welcome"></strong><span class="text-warning" ng-bind="::user.role"></span>
+                </div>
+            </div>
 
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <!--.btn-navbar is used as the toggle for collapsed navbar content--><a class="btn btn-navbar"
+                        data-target=".nav-collapse" data-toggle=
+                        "collapse"><span class="icon-bar"></span><span class=
+                        "icon-bar"></span><span class="icon-bar"></span></a>
 
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
+                        <!-- Everything you want hidden at 940px or less, place within here-->
+
+                        <div class="nav-collapse collapse">
+                            <ul class="nav">
+                                <li ng-class="getNavbarClass('home')">
+                                    <a class="dropdown-toggle" ui-sref="home"><i class="icon-home"></i><span ng-bind="::translation.home"></span></a>
+                                </li>
+
+                                <li class="divider-vertical"></li>
+                            </ul>
+
+                            <ul class="nav pull-right nav-small">
+                                <li>
+                                    <a href="" ng-click="logout()"><i class="icon-unlock"></i><span ng-bind="::translation.logout"></span></a>
+                                </li>
+
+                                <li class="divider-vertical"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main">
+        <div class="main-inner">
+            <div class="sidebar sidebar-fixed"> <!-- Sidebar -->
+                <a class="btn btn-sidebar" data-target=".sidebar-collapse"
+                data-toggle="collapse"><span class=
+                "icon-bar"></span><span class="icon-bar"></span><span class=
+                "icon-bar"></span></a>
+
+                <div class="sidebar-collapse collapse">
+                    <ul class="nav nav-list" id="accordion1">
+                        <li ng-class="getNavbarClass('components')">
+                            <a ui-sref="components"><i class="icon-th-large"></i><span ng-bind="::translation.components"></span></a>
+                        </li>
+
+                        <li ng-class="getNavbarClass('events')">
+                            <a ui-sref="events"><i class="icon-list-alt"></i><span ng-bind="::translation.events"></span></a>
+                        </li>
+
+                        <li class="divider"></li>
+
+                        <li class="nav-header" ng-bind="::translation.settings"></li>
+
+                        <li ng-class="getNavbarClass('network')">
+                            <a ui-sref="network"><i class="fa fa-sitemap"></i><span ng-bind="::translation.network"></span></a>
+                        </li>
+
+                        <li ng-class="getNavbarClass('wnetwork')">
+                            <a ui-sref="wnetwork"><i class="fa fa-wifi"></i><span ng-bind="::translation.wnetwork"></span></a>
+                        </li>
+
+                        <li ng-class="getNavbarClass('certificate')">
+                            <a ui-sref="certificate"><i class="icon-certificate"></i><span ng-bind="::translation.certificate"></span></a>
+                        </li> 
+
+                        <li ng-class="getNavbarClass('password')">
+                            <a ui-sref="password"><i class="icon-user"></i><span ng-bind="::translation.password"></span></a>
+                        </li>                       
+                    </ul>
+                </div>
+            </div> <!-- End: Sidebar -->
+
+            <div class="page">
+                <span ui-view="content"></span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer footer-fixed-bottom">
+        <div class="footer-inner">
+            &nbsp;&copy; {{::currentYear}} {{::translation.company}}
+        </div>
+    </footer>

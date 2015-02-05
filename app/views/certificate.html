@@ -1,0 +1,30 @@
+<div class="row-fluid">
+	<div ng-include="'views/message_template.html'"></div>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<div class="well well-kabaWhite">
+			<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
+				<legend ng-bind="::translation.legend"></legend>
+
+				<div class="control-group" ng-class="{ error : errorFields.certificate }">
+					<label for="certificate" class="control-label" ng-bind="::translation.certificate"></label>
+					<div class="controls">
+						<input id="certFileUpload" type="file" nv-file-select uploader="uploader" />
+						<span ng-show="uploader.isUploading">{{uploader.progress}} %</span>  
+					</div>
+				</div>
+										
+				<div class="control-group">
+					<div class="controls">
+						<!-- <button id="uploadButton" class="btn btn-primary" type="submit" ng-disabled="form.$invalid" ng-show="isAdmin">Upload</button>  -->
+						<a href="" id="uploadButton" class="btn btn-custom-lighten" ng-click="checkFile()" ng-disabled="uploader.isReady || uploader.isUploading || uploader.isSuccess" ng-bind="::translation.uploadButton"></a> 
+						<!-- <a href="" id="uploadButton" class="btn btn-primary" ng-click="checkFile()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">Upload</a> 
+         				<span ng-show="item.isUploading">{{item.progress}} %</span>  -->
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+

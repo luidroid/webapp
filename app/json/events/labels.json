@@ -1,0 +1,20 @@
+{ 
+	"title" : "Events",
+	"legend" : "Available events",
+	"refreshButton" : "Refresh",
+	"counter" : "Counter",
+	"timestamp" : "Timestamp",
+	"priority" : "Priority",
+	"source" : "Source",
+	"groups" : "Groups",
+	"loglevel" : "Log level",
+	"messageId" : "Message id",
+	"message" : "Message",
+	"entries" : "Entries",
+	"info" : {
+		"message" : "No events available"
+	},
+	"common" : {
+		"loading" : " Loading..."
+	}
+}

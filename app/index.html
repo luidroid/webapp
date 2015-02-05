@@ -2,15 +2,23 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Kaba GmbH</title>
     <meta name="description" content="">
+    <meta name="author" content="Luis Amoroso">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/ngprogress/ngProgress.css" />
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-toggle-switch/style/bootstrap3/angular-toggle-switch-bootstrap-3.css" />
     <!-- endbower -->
     <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
+    <!-- build:css(.tmp) styles/main.css -->   
+    <link rel="stylesheet" href="styles/doc-base.css">
+    <link rel="stylesheet" href="styles/kesign.css">
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
@@ -20,23 +28,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">web</h3>
-      </div>
-
-      <div ng-include="'views/main.html'" ng-controller="MainCtrl"></div>
-
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
-    </div>
-
+    <span ui-view></span>
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>
@@ -58,14 +50,48 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/bootstrap/docs/assets/js/bootstrap.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
+    <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/kineticjs/kinetic.js"></script>
+    <script src="bower_components/angular-file-upload/angular-file-upload.js"></script>
+    <script src="bower_components/angular-timer/dist/angular-timer.js"></script>
+    <script src="bower_components/ngprogress/build/ngProgress.js"></script>
+    <script src="bower_components/angular-bootstrap-toggle-switch/angular-toggle-switch.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/kesign.js"></script>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/login.js"></script>
+        <script src="scripts/controllers/dashboard.js"></script>
+        <script src="scripts/controllers/event_list.js"></script>
+        <script src="scripts/services/navbar.js"></script>    
+        <script src="scripts/services/dashboard_data.js"></script>
+        <script src="scripts/services/reddit.js"></script>
+        <script src="scripts/services/login_data.js"></script>
+        <script src="scripts/directives/angular.easypiechart.js"></script>
+        <script src="scripts/directives/directives.js"></script>
+        <script src="scripts/services/user.js"></script>
+        <script src="scripts/controllers/component_list.js"></script>
+        <script src="scripts/services/component_data.js"></script>
+        <script src="scripts/controllers/component_details.js"></script>
+        <script src="scripts/controllers/component_edit.js"></script>
+        <script src="scripts/controllers/component_new.js"></script>
+        <script src="scripts/services/wnetwork_data.js"></script>
+        <script src="scripts/services/event_data.js"></script>
+        <script src="scripts/services/network_data.js"></script>
+        <script src="scripts/controllers/network.js"></script>
+        <script src="scripts/controllers/wnetwork.js"></script>
+        <script src="scripts/controllers/password.js"></script>
+        <script src="scripts/controllers/certificate.js"></script>
+        <script src="scripts/services/certificate_data.js"></script>
         <!-- endbuild -->
 </body>
 </html>

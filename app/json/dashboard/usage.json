@@ -1,0 +1,10 @@
+{ 
+	"component" : {
+		"percent" : 10,
+		"text" : "1 of 16"
+	},
+	"router" : {
+		"percent" : 20,
+		"text" : "1 of 8"
+	}
+}

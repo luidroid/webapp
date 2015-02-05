@@ -1,0 +1,15 @@
+{
+	"welcome" : "Welcome",
+	"name" : " admin/reader",
+	"home" : "Home",
+	"logout" : "Logout",
+	"components" : "Wireless components",
+	"events" : "Events",
+	"settings" : "Settings",
+	"network" : " Ethernet network",
+	"wnetwork" : " Wireless network",
+	"certificate" : "Certificate",
+	"password" : "Password",
+	"copyright" : "Copyright",
+	"company" : "Kaba GmbH"
+}

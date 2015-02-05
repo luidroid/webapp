@@ -1,0 +1,8 @@
+{
+	"title" : "Wireless Gateway",
+	"legend" : "Please login",
+	"errorMsg" : "User not valid",
+	"username" : "Username",
+	"password" : "Password",
+	"button" : "Login"
+}
