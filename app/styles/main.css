@@ -18,7 +18,7 @@
   z-index: 2;
 }
 .textcenter{
-  width: 180px;
+  width: 150px;
   text-align: center;
  /* margin-left: 20px;*/
 }
@@ -32,6 +32,11 @@
   list-style-type: none;
   padding-top: 5px;
   margin: 0;
+}
+
+.dns
+{
+   padding-bottom: 10px;
 }
 
 /* Styling for the ngProgress itself */

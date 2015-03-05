@@ -17,6 +17,8 @@ angular.module('webApp')
 	  $scope.errorFields = {};
 	  var componentTmp = angular.copy($scope.component);
 	  
+	  angular.element('html,body').scrollTop(0);
+
 	  // Labels
 	  ComponentService.getComponentEditLabels().then(function(res){
 	  	$scope.translation = res.data;

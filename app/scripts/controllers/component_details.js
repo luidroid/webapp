@@ -1,3 +1,4 @@
+/*global Kinetic:false*/
 'use strict';
 
 /**
@@ -17,7 +18,20 @@ angular.module('webApp')
 	  $scope.isInfo = false;
 	  //$scope.username = '';
 	  $scope.isBatteryAvailable = true;
+	  $scope.isAvailableSoftware = false;
+	  //$scope.max = 50; // used on progressbar
+	  var serviceInterval,
+	  	  service,
+	  	  stopService,
+	  	  updateServiceInterval,
+	  	  updateService,
+	  	  stopUpdateService;
+  	  var counter = 0;
+	  var counterInfo1 = '';
+	  var counterInfo2 = ''; 
 	  
+	  angular.element('html,body').scrollTop(0);
+
 	  // Get user role
 	  UserService.getUser().then(function(res){
 		  $scope.isAdmin = UserService.isAdmin(res.data.role);
@@ -26,10 +40,7 @@ angular.module('webApp')
 	  	  goToLoginView();
 	  });
 	  
-	  /*
-	  $scope.$watch('username', function() {
-		  UserService.updateUsername($scope.username);
-	  });*/
+	  //updateServiceInterval = $interval(updateService, 300);
 	  	 
 	  // Get labels
 	  ComponentService.getComponentDetailLabels().then(function(res){
@@ -41,7 +52,7 @@ angular.module('webApp')
 	  });
 	  
 	  // Get component by Id
-	  ComponentService.getComponentById($stateParams.id).then(function(res){
+	  ComponentService.getComponentById($stateParams.id).then(function(res){ console.log(res.data);
 		  if(res.data.error){
 		  		$scope.errors = res.data.errors;
 		  		$scope.isError = true;
@@ -53,7 +64,11 @@ angular.module('webApp')
 					  drawBattery($scope.component.battery.percent);
 					  $scope.isBatteryAvailable = false;
 				  }
-				  drawSignal($scope.component.signal.strength);  
+				  drawSignal($scope.component.signal.strength);
+
+				  if($scope.component.software.availableVersion){
+				  	 $scope.isAvailableSoftware = true;
+				  }  
 			  }	  
 		  } 	 
 	  }, function(error){
@@ -62,6 +77,18 @@ angular.module('webApp')
 	  			goToLoginView();
 	  	  }
 	  });
+
+	  $scope.updateComponent = function (){ console.log('try update');
+	  		if(angular.isDefined(updateServiceInterval)){
+				return; 
+			} 
+			console.log('update now');
+	  		ComponentService.updateComponent($scope.component.id).then(function(res){
+		  		$scope.isInstalling = true;		  		
+				updateServiceInterval = $interval(updateService, 3000);
+		  	});
+	
+	  };
 	  
 	  // Identify component
 	  $scope.identify = function(){
@@ -72,23 +99,16 @@ angular.module('webApp')
 				  angular.element('#identifyButton').blur();
 			  }
 			  else{
-				  var counter = res.data.counter;
-				  var counterInfo1 = res.data.counterInfo1;
-				  var counterInfo2 = res.data.counterInfo2;
 			  	  $scope.isDisabled = true;		  	 		  	 
 			  	  $scope.isError = false;
 			  	  
-			  	  var timerInterval = $interval(function(){
-			  		  $scope.isInfo = true;	
-			  		  $scope.infos[0] = counterInfo1 + counter-- + counterInfo2;
-			  		  
-			  		  if(counter < 0){
-			  			$interval.cancel(timerInterval);
-			  			$scope.isDisabled = false;
-			  			$scope.isInfo = false;
-			  			$scope.infos.splice(0,1);
-			  		  }
-			  	  },1000);
+			  	  if(angular.isDefined(serviceInterval)){
+				  	return; 
+				  }
+				  counter = res.data.counter;
+				  counterInfo1 = res.data.counterInfo1;
+				  counterInfo2 = res.data.counterInfo2; 
+				  serviceInterval = $interval(service, 1000);
 			  }
 		  	  
 		  }, function(error){
@@ -98,7 +118,56 @@ angular.module('webApp')
 		  });
 	  };
 	  
-	  // Delete Component
+	  service = function(){ 
+		  $scope.isInfo = true;	
+  		  $scope.infos[0] = counterInfo1 + counter-- + counterInfo2; 		  
+  		  if(counter < 0){
+  			stopService();
+  			$scope.isDisabled = false;
+  			$scope.isInfo = false;
+  			$scope.infos.splice(0,1);
+  		  }
+	  };
+
+	  // Stop service interval if it exists
+	  stopService = function(){
+		  if(angular.isDefined(serviceInterval)){
+			  $interval.cancel(serviceInterval);
+			  serviceInterval = undefined;
+		  }
+	  };
+
+	  updateService = function(){ 	  
+  		ComponentService.isSoftwareInstalled($scope.component.id).then(function(res){ console.log(res.data);
+	  		if(res.data.errors){
+				stopUpdateService();
+				$scope.isAvailableSoftware = false;
+		  		$scope.isInstalling = false;
+		  		$scope.installationOk = false;
+		  		$scope.installationFailed = true;
+	  		}
+
+  			if(res.data.isInstalled){ console.log(' install ok');	
+	  			stopUpdateService();
+	  			$scope.isAvailableSoftware = false;
+	  			$scope.isInstalling = false;
+	  			$scope.installationOk = true;
+	  			$scope.installationFailed = false;
+	  			$scope.component.software.appVersion = $scope.component.software.availableVersion;
+	  		}
+	  		  		
+	  	});
+	  };
+
+	  // Stop update service interval if it exists
+	  stopUpdateService = function(){
+		  if(angular.isDefined(updateServiceInterval)){
+			  $interval.cancel(updateServiceInterval);
+			  updateServiceInterval = undefined;
+		  }
+	  };
+
+	   // Delete Component
 	  $scope.deleteAction = function(){
 		  console.log('id: ' + $scope.component.id);
 		  ComponentService.deleteComponent($scope.component.id).then(function(res){
@@ -109,8 +178,7 @@ angular.module('webApp')
 			  }
 			  else{			 	
 				  goToComponentList();  
-			  }
-			 
+			  }		 
 		  }, function(error){
 			  if(error.status === HttpStatus.FORBIDDEN){
 		  			goToLoginView();

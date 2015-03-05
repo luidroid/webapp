@@ -20,7 +20,7 @@ angular.module('webApp')
 	  $scope.isAvailable = false;
 	  $scope.isAdmin = false;
 	  $scope.isCommission = false;
-	  
+	 	  
 	  // Get user role
 	  UserService.getUser().then(function(res){
 		  $scope.isAdmin = UserService.isAdmin(res.data.role);

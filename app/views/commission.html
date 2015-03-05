@@ -1,0 +1,104 @@
+<legend>
+	<h2><span ng-bind="::translation.title"></span></h2>
+</legend>
+
+<div class="row-fluid">
+	<div class="span12">
+		<!-- Ajax loader -->
+		<p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Searching"><span ng-bind="::translation.loading"></span></p>
+
+		<div class="well well-kabaWhite" ng-show="isAvailableForm"> <!-- Form -->
+			<form name="commissionForm" class="form-horizontal">		
+				<div class="control-group" ng-class="{ error : commissionForm.timeout.$invalid && commissionForm.timeout.$dirty }">
+					<label for="inputTimeout" class="control-label" ng-bind="::translation.openTimeout"></label>
+					<div class="controls">
+						<input type="number" name="timeout" ng-model="commissionTimeout" ng-model-options="{ debounce: 250 }" ng-change="clean()"placeholder="{{::translation.openTimeoutPlaceholder}}" min="1" max="1440" required>
+						<span class="help-inline" ng-show="commissionForm.timeout.$error.min || commissionForm.timeout.$error.max" ng-bind="::translation.rangeField"></span>
+						<span class="help-inline" ng-show="commissionForm.timeout.$error.number" ng-bind="::translation.allowedField"></span>
+						<span class="help-inline" ng-show="commissionForm.timeout.$dirty && commissionForm.timeout.$error.required && !commissionForm.timeout.$error.number" ng-bind="::translation.requiredField"></span>	
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label for="inputTimeout" class="control-label" ng-bind="::translation.openNetwork"></label>
+					<div class="controls">
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="wnetwork" ng-click="toggle()" is-disabled="{{isFormValid(commissionForm.$valid)}}"></div>
+					  	<span ng-show="wnetwork">
+						    <span ng-bind="::translation.openParenthesis"></span>
+						  	<timer end-time="endTime" autostart="false">{{hours}} <span ng-bind="::translation.hours"></span> {{minutes}} <span ng-bind="::translation.minutes"></span> {{seconds}} <span ng-bind="::translation.seconds"></span></timer>
+						 </span>
+					</div>
+				</div>
+			</form>
+		</div> <!-- End: Form -->
+		
+		<!-- Ajax loader -->
+		<p ng-show="isSearching"><img src="images/ajax-loader.gif" alt="Searching"><span ng-bind="::translation.searching"></span></p>
+	
+		<div class="widget" ng-show="isComponentList">  <!-- Components -->
+		  <div class="widget-header">
+		    <i class="icon-th-large"></i>
+		    <h3 ng-bind="::translation.legend"></h3>
+		    <span ng-show="wnetwork"><i class="fa fa-spinner fa-spin fa-lg"></i></span>
+		  </div>
+		  <div class="widget-table">
+		    <div class="widget-content">
+		      <table class="table">
+		        <thead>
+		        	<!--<th ng-bind="::translation.name"></th>-->
+		        	<th ng-bind="::translation.type"></th>
+		        	<th ng-bind="::translation.eui"></th>
+		        	<th ng-bind="::translation.networkAddress"></th>
+		        	<th ng-bind="::translation.guid"></th>
+		        	<th ng-bind="::translation.status"></th>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="component in components">
+		        	<!--<td ng-bind="::component.name"></td>-->
+		        	<td ng-bind="::component.type"></td>
+		        	<td ng-bind="::component.id"></td>
+		        	<td ng-bind="::component.wirelessAddress"></td>
+		        	<td ng-bind="::component.guid"></td> 	 	
+		        	<td>
+		        		<span ng-bind="::component.status"></span>
+		        		<span class="badge badge-success" ng-show="::component.checked"><i class="icon-ok"></i></span>
+		        	</td> 	
+		          </tr>			          
+		        </tbody>
+		      </table>
+		    </div>	    
+		  </div>
+		</div>	<!-- End : Components -->		
+	
+		<div class="widget" ng-show="isRouterList">  <!-- Routers -->
+		  <div class="widget-header">
+		    <i class="icon-bullhorn"></i>
+		    <h3 ng-bind="::translation.legendRouters"></h3>
+		    <span ng-show="wnetwork"><i class="fa fa-spinner fa-spin fa-lg"></i></span>
+		  </div>
+		  <div class="widget-table">
+		    <div class="widget-content">
+		      <table class="table">
+		        <thead>
+		        	<!-- <th ng-bind="::translation.name"></th> -->
+		        	<th ng-bind="::translation.type"></th>
+		        	<th ng-bind="::translation.eui"></th>
+		        	<th ng-bind="::translation.networkAddress"></th>
+		        	<th ng-bind="::translation.status"></th>
+		        </thead>
+		        <tbody>
+		          <tr ng-repeat="router in routers">
+		        	<!--<td ng-bind="::router.name"></td>-->
+		        	<td ng-bind="::router.type"></td>
+		        	<td ng-bind="::router.id"></td>
+		        	<td ng-bind="::router.networkAddress"></td>	
+		        	<td><span class="badge badge-success"><i class="icon-ok"></i></span></td>  	
+		          </tr>			          
+		        </tbody>
+		      </table>
+		    </div>	    
+		  </div>
+		</div>	<!-- End : Routers -->	
+
+	</div>
+</div>

@@ -33,7 +33,7 @@ angular.module('webApp')
 
     // Save network values
     srv.saveNetworkValues = function(networkObj){
-      url = '../settingsNetworkServlet?action=save';
+      url = '../settingsNetworkServlet?action=save&cidr=' + networkObj.cidr.selectedPos;
         xhr = $http({
             method: 'POST',
             url: url,

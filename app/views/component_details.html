@@ -3,14 +3,14 @@
 		<span ng-bind="::translation.title"></span><span ng-bind="::component.name"></span>
 		<span class="pull-right" ng-hide="isError">
  
-			<button id="identifyButton" class="btn btn-large btn-warning" type="button" ng-click="identify()"
+			<a href="" id="identifyButton" role="button" class="btn btn-custom-lighten btn-large" ng-click="identify()"
 																						ng-disabled="isDisabled"
-																						ng-bind="translation.button.identifyButton"
+																						ng-bind="::translation.button.identifyButton"
 																						ng-show="isAdmin">
-		    </button>
-			<a ng-href="#/components/edit/{{component.id}}" class="btn btn-custom-lighten btn-large" type="button" ng-bind="::translation.button.editButton" ng-show="isAdmin"></a>
+		    </a>
+			<a ng-href="#/components/edit/{{component.id}}" role="button" class="btn btn-custom-lighten btn-large" ng-bind="::translation.button.editButton" ng-show="isAdmin"></a>
 			<!-- Button to trigger modal -->
-			<a role="button" class="btn btn-large btn-danger" data-toggle="modal" data-target="#deleteModal" ng-bind="::translation.button.removeButton" ng-show="isAdmin"></a>
+			<a href="" role="button" class="btn btn-large btn-danger" data-toggle="modal" data-target="#deleteModal" ng-bind="::translation.button.removeButton" ng-show="isAdmin"></a>
 		</span>
 	</h2>
 </legend>
@@ -32,6 +32,8 @@
 			<div class="widget-content">
 			     <dt ng-bind="::translation.information.name"></dt>
 			      <dd ng-bind="::component.name"></dd>
+			     <dt ng-bind="::translation.information.type"></dt>
+			      <dd ng-bind="::component.type"></dd>
 			     <dt ng-bind="::translation.information.mac"></dt>
 			      <dd ng-bind="::component.id"></dd>
 			     <dt ng-bind="::translation.information.address"></dt>
@@ -76,52 +78,90 @@
 			<div class="widget-content">
 				<div class="span6">
 				   <dt ng-bind="::translation.signal.rssi"></dt>
-				   	<dd><span ng-bind="::component.signal.rssi"></span></dd>
+				   	<dd><span ng-bind="::component.signal.level"></span></dd>
 				</div>
-				<div class="span6"> <div id="signalContainer"></div></div>				   
+				<div class="span6"><div id="signalContainer"></div></div>				   
 			</div>
 		</div>
 	</div>  <!-- End: Signal -->
 	
 </div>
- <!--
-<div class="row-fluid" ng-hide="isError">
-		
-	<div class="span4"> 
+
+<div class="row-fluid">		
+	<div class="span4"> <!-- Software -->
 		<div class="widget">
 			<div class="widget-header">
 				<i class="icon-hdd"></i>
-				<h3 ng-bind="translation.os.legend"></h3>
+				<h3 ng-bind="::translation.os.legend"></h3>
 			</div>
 			<div class="widget-content">
-				<dt ng-bind="translation.os.fwVersion"></dt>
-			      <dd>TBD</dd>
+				<dt ng-bind="::translation.os.appVersion"></dt>
+			      <dd ng-bind="component.software.appVersion"></dd> 
+			   <!-- <dt ng-bind="::translation.os.wirelessVersion"></dt>
+			      <dd ng-bind="::component.software.wirelessVersion"></dd> -->
 			</div>
 		</div>
-	</div>
+	</div> <!-- Software -->
 	
-	<div class="span4"> 
+	<div class="span4"> <!-- Update -->
 		<div class="widget">
 			<div class="widget-header">
 				<i class="icon-download-alt"></i>
-				<h3 ng-bind="translation.update_legend"></h3>
+				<h3 ng-bind="::translation.update.legend"></h3>
 			</div>
 			<div class="widget-content">
-				 <dt ng-bind="translation.update_available"></dt>
+				<div class="label label-success" ng-show="installationOk" ng-bind="::translation.update.updateOk"></div>
+				<div class="label label-important" ng-show="installationFailed" ng-bind="::translation.update.updateFailed"></div>
+
+				<div ng-show="isAvailableSoftware">
+					<dt ng-bind="::translation.update.available"></dt>
+					<!--<dd>
+						<div class="progress">
+						  <div class="bar" style="width: {{max}}%;"></div>
+						</div>
+					</dd>	-->	
+		      		<dd ng-bind="::component.software.availableVersion"></dd>	
+				</div>		
+     			      		
+				<p ng-hide="isAvailableSoftware" ng-bind="::translation.update.noAvailableSoftware"></p>
+
+				<!-- Ajax Loader -->
+    			<p ng-show="isInstalling"><img src="images/ajax-loader.gif" alt="Installing"><span ng-bind="::translation.update.installing"></span></p>
+
+			    <a href="" class="btn btn-default" ng-show="isAvailableSoftware && isAdmin" ng-click="updateComponent()" ng-bind="::translation.update.updateButton" ng-disabled="isInstalling"></a> 	
+			   
+
+		      	<!--
+		      	<dt>OS version available</dt>
+		      		<dd>
+						<div class="progress">
+						  <div class="bar" style="width: {{max}}%;"></div>
+						</div>
+					</dd>			      									
 		      		<dd>TBD</dd>
-		      	<a class="btn btn-default" type="button" ng-bind="translation.updateButton"></a>
+		      		<dd>No available update</dd>
+		      		<a class="btn btn-default" type="button">Update</a>
+		      		<p>70%</p> 
+		      		-->  
 			</div>
 		</div>
 	</div> 
 	
-	<div class="span4"> 
-		
+	<div class="span4"> <!-- Site measurement
+		<div class="widget">
+			<div class="widget-header">
+				<i class="icon-resize-full"></i>
+				<h3>Site measurement</h3>
+			</div>
+			<div class="widget-content">
+				<dt>RSSI</dt>
+		      		<dd>-100</dd>
+		      		<div><a class="btn btn-default" type="button">Check</a></div>
+		      	
+			</div>
+		</div>-->
 	</div> 
-</div> -->
+</div> 
 
 <!-- Modal -->
 <div ng-include="'views/delete_component_template.html'"></div>
-<!--
-<script src="scripts/battery.js"></script>
-<script src="scripts/signal.js"></script>
--->

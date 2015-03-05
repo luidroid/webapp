@@ -1,3 +1,5 @@
+/*global Kinetic:false*/
+/*global $:false*/
 'use strict';
 
 /**
@@ -12,6 +14,14 @@ angular.module('webApp')
      $scope.componentPercent = 0;
      $scope.componentOptions = {
         barColor:'#2C3E50',
+        scaleColor:false,
+        lineWidth:10,
+        lineCap:'circle'
+      }; 
+
+     $scope.routerPercent = 0;
+     $scope.routerOptions = {
+        barColor: '#F2A200',
         scaleColor:false,
         lineWidth:10,
         lineCap:'circle'
@@ -36,7 +46,7 @@ angular.module('webApp')
       DashboardService.getUsage().then(function(res){  
          $scope.usage = res.data;   
          $scope.componentPercent = $scope.usage.component.percent; 
-         //$scope.router_percent = $scope.usage.router.percent; // Router chart
+         $scope.routerPercent = $scope.usage.router.percent;
       },function(error){
           if(error.status === HttpStatus.FORBIDDEN){
            goToLoginView();
@@ -51,23 +61,22 @@ angular.module('webApp')
       });
 
       var goToLoginView = function(){
-        $state.go('login');
+        $state.go('login'); 
       };
   
-      var maxTextLength = 16;
       //Draw Network
-      var drawNetwork = function ( data, uiState ){
-        var offset = 5,
-          h_dist = 10,
+      var drawNetwork = function ( data, uiState ){ console.log(data);
+      var offset = 5,
+          hDist = 10,
           width = 120,
           height = 70,
           cornerRadius = 5,
-          x = h_dist + offset,
+          x = hDist + offset,
           y = offset,
-          v_dist = height + h_dist,
-          t_dist = x,
-          line_x,
-          line_y,
+          vDist = height + hDist,
+          tDist = x,
+          lineX,
+          lineY,
           line,
           layer,
           stage,
@@ -75,16 +84,17 @@ angular.module('webApp')
           warningOpacity = 0.6,
           fillColor = '',
           opacity = 1,
+          maxTextLength = 16,
           tooltip;
 
         var drawComponents = function (components){
-          line_x = x - h_dist;
-          line_y =  y + height/2;
+          lineX = x - hDist;
+          lineY =  y + height/2;
           
           line = new Kinetic.Line({
-              x: line_x,
-              y: line_y,
-              points:[0, 0, h_dist, 0],
+              x: lineX,
+              y: lineY,
+              points:[0, 0, hDist, 0],
               stroke: 'gray',
               dash: [5, 5]
           });
@@ -93,9 +103,9 @@ angular.module('webApp')
           $.each(components, function(key,component){
 
             line = new Kinetic.Line({
-                x: line_x,
-                y: line_y,
-                points:[0, 0, 0, v_dist, h_dist, v_dist],
+                x: lineX,
+                y: lineY,
+                points:[0, 0, 0, vDist, hDist, vDist],
                 stroke: '#4C4C4C',
                 dash: [5, 5]
             });
@@ -111,7 +121,7 @@ angular.module('webApp')
               opacity = 1;
             }
             
-            y += v_dist;
+            y += vDist;
             var componentRect = new Kinetic.Rect({ 
                   x: x,
                   y: y,
@@ -126,7 +136,7 @@ angular.module('webApp')
       
             // Component Name
             var text = new Kinetic.Text({
-                  x: x + h_dist,
+                  x: x + hDist,
                   y: y + offset,
                   fontFamily: 'Calibri',
                   fontSize: 14,
@@ -191,8 +201,8 @@ angular.module('webApp')
                   
             // Component ID
             text = new Kinetic.Text({
-                  x: x + h_dist,
-                  y: y + offset + t_dist,
+                  x: x + hDist,
+                  y: y + offset + tDist,
                   fontFamily: 'Calibri',
                   fontStyle: 'bold',
                   text: component.id, //'EUI:',
@@ -201,8 +211,8 @@ angular.module('webApp')
             layer.add(text);
 
             text = new Kinetic.Text({
-                  x: x + h_dist + 2*t_dist,
-                  y: y + offset + t_dist,
+                  x: x + hDist + 2*tDist,
+                  y: y + offset + tDist,
                   fontFamily: 'Calibri',
                   text: '',//component.id,
                   fill: 'black'
@@ -211,8 +221,8 @@ angular.module('webApp')
 
             // Component Signal
             text = new Kinetic.Text({
-                  x: x + h_dist,
-                  y: y + offset + 2*t_dist,
+                  x: x + hDist,
+                  y: y + offset + 2*tDist,
                   fontFamily: 'Calibri',
                   fontStyle: 'bold',
                   text: 'RSSI:',
@@ -221,8 +231,8 @@ angular.module('webApp')
             layer.add(text);
 
             text = new Kinetic.Text({
-                  x: x + h_dist + 2*t_dist, //+ offset,
-                  y: y + offset + 2*t_dist,
+                  x: x + hDist + 2*tDist, //+ offset,
+                  y: y + offset + 2*tDist,
                   fontFamily: 'Calibri',
                   text: component.signal.strength,
                   fill: 'black'
@@ -231,8 +241,8 @@ angular.module('webApp')
 
             // Component Battery
             text = new Kinetic.Text({
-                  x: x + h_dist,
-                  y: y + offset + 3*t_dist,
+                  x: x + hDist,
+                  y: y + offset + 3*tDist,
                   fontFamily: 'Calibri',
                   fontStyle: 'bold',
                   text: 'Battery:',
@@ -241,15 +251,15 @@ angular.module('webApp')
             layer.add(text);
 
             text = new Kinetic.Text({
-                  x: x + h_dist + 3*t_dist,
-                  y: y + offset + 3*t_dist,
+                  x: x + hDist + 3*tDist,
+                  y: y + offset + 3*tDist,
                   fontFamily: 'Calibri',
                   text: component.battery.percent,
                   fill: 'black'
               });
             layer.add(text);
 
-            line_y += v_dist;
+            lineY += vDist;
 
           }); 
         };
@@ -277,8 +287,8 @@ angular.module('webApp')
       
         // Gateway Name
         var text = new Kinetic.Text({
-              x: x + h_dist,
-              y: y + h_dist,
+              x: x + hDist,
+              y: y + hDist,
               fontFamily: 'Calibri',
               fontSize: 14,
               text: modifyText(data.name),
@@ -288,8 +298,8 @@ angular.module('webApp')
 
         // Gateway MAC
         text = new Kinetic.Text({
-              x: x + h_dist,
-              y: y + h_dist + t_dist,
+              x: x + hDist,
+              y: y + hDist + tDist,
               fontFamily: 'Calibri',
               fontStyle: 'bold',
               text: data.id, //'MAC:',
@@ -298,8 +308,8 @@ angular.module('webApp')
         layer.add(text);
 
         text = new Kinetic.Text({
-              x: x + h_dist + 2*t_dist,
-              y: y + h_dist + t_dist,
+              x: x + hDist + 2*tDist,
+              y: y + hDist + tDist,
               fontFamily: 'Calibri',
               text: '',//data.id,
               fill: 'black'
@@ -308,8 +318,8 @@ angular.module('webApp')
 
         // Gateway Signal
         text = new Kinetic.Text({
-              x: x + h_dist,
-              y: y + h_dist + 2*t_dist,
+              x: x + hDist,
+              y: y + hDist + 2*tDist,
               fontFamily: 'Calibri',
               fontStyle: 'bold',
               text: '',//'Signal:',
@@ -318,8 +328,8 @@ angular.module('webApp')
         layer.add(text);
 
         text = new Kinetic.Text({
-              x: x + h_dist + 2*t_dist + offset,
-              y: y + h_dist + 2*t_dist,
+              x: x + hDist + 2*tDist + offset,
+              y: y + hDist + 2*tDist,
               fontFamily: 'Calibri',
               text: data.signal,
               fill: 'black'
@@ -333,20 +343,20 @@ angular.module('webApp')
 
         // Draw Routers with their components
         if(data.routers){
-          var dist = x + h_dist + width + offset;
-          var r_dist = 0;
+          var dist = x + hDist + width + offset; 
+          var rDist = 0;
           $.each(data.routers, function(key,router){
             x += dist;  
-            y = height/2 + h_dist + offset;
+            y = height/2 + hDist + offset;
             line = new Kinetic.Line({
-                x: x - 3*h_dist,
+                x: x - 3*hDist,
                 y: offset + height/2,
-                points:[r_dist, 0, height+2*h_dist, 0, height+2*h_dist, h_dist],
+                points:[rDist, 0, height+2*hDist, 0, height+2*hDist, hDist],
                 stroke: 'gray',
                 dash: [5, 5]
             });
             layer.add(line);
-            r_dist = -width/2;
+            rDist = -width/2;
 
             //Router
             rect = new Kinetic.Rect({
@@ -356,14 +366,14 @@ angular.module('webApp')
                   height: height,
                   cornerRadius: cornerRadius,
                   strokeWidth: 4,
-                  stroke: 'orange'
+                  stroke: '#F2A200'//'orange' 
               });
             layer.add(rect);
 
             //Router Name
             text = new Kinetic.Text({
-                  x: x + h_dist,
-                  y: y + h_dist,
+                  x: x + hDist,
+                  y: y + hDist,
                   fontFamily: 'Calibri',
                   fontSize: 14,
                   text: modifyText(router.name),
@@ -373,40 +383,40 @@ angular.module('webApp')
             
             // Router MAC
             text = new Kinetic.Text({
-                  x: x + h_dist,
-                  y: y + h_dist + t_dist,
+                  x: x + hDist,
+                  y: y + hDist + tDist,
                   fontFamily: 'Calibri',
                   fontStyle: 'bold',
-                  text: 'MAC:',
+                  text: router.id, //'MAC:'
                   fill: 'black'
               });
             layer.add(text);
 
             text = new Kinetic.Text({
-                  x: x + h_dist + 2*t_dist,
-                  y: y + h_dist + t_dist,
+                  x: x + hDist + 2*tDist,
+                  y: y + hDist + tDist,
                   fontFamily: 'Calibri',
-                  text: router.id,
+                  text: '', //router.id,
                   fill: 'black'
               });
             layer.add(text);
 
             // Router Signal
             text = new Kinetic.Text({
-                  x: x + h_dist,
-                  y: y + h_dist + 2*t_dist,
+                  x: x + hDist,
+                  y: y + hDist + 2*tDist,
                   fontFamily: 'Calibri',
                   fontStyle: 'bold',
-                  text: 'Signal:',
+                  text: '', //'Signal:'
                   fill: 'black'
               });
             layer.add(text);
 
             text = new Kinetic.Text({
-                  x: x + h_dist + 2*t_dist + offset,
-                  y: y + h_dist + 2*t_dist,
+                  x: x + hDist + 2*tDist + offset,
+                  y: y + hDist + 2*tDist,
                   fontFamily: 'Calibri',
-                  text: router.signal,
+                  text: '', //router.signal,
                   fill: 'black'
               });
             layer.add(text);
@@ -420,10 +430,11 @@ angular.module('webApp')
         
         stage.add(layer);
 
-     } 
+     }; 
     // Modify text it is too long (over 16 characters)
     function modifyText(text){
-      var res = text;
+      var res = text,
+          maxTextLength = 16;
       if(text.length > maxTextLength){
         res = text.substring(0,maxTextLength - 3) + '...';
       }

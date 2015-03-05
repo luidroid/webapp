@@ -1,0 +1,28 @@
+<div ng-include="'views/message_template.html'"></div>
+<div class="row-fluid"> <!-- Import -->
+	<div class="span12">
+		<div class="well well-kabaWhite">
+			<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
+				<legend>
+					<span ng-bind="::translation.legend"></span>
+				</legend>
+
+				<div class="control-group" ng-class="{ error :  isFileuploadInfo || isFileuploadWarning }">
+					<label for="certificate" class="control-label" ng-bind="::translation.filename"></label>
+					<div class="controls">
+						<input id="importFileUpload" type="file" nv-file-select uploader="uploader" filters="customFilter" required/>
+						<span ng-show="uploader.isUploading">{{uploader.progress}} %</span> 
+						<span class="help-inline text-error" ng-show="isFileuploadInfo" ng-bind="::translation.info"></span> 
+						<span class="help-inline text-error" ng-show="isFileuploadWarning" ng-bind="::translation.warning"></span> 
+					</div>
+				</div>
+					
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" id="uploadButton" class="btn btn-custom-lighten" ng-disabled="uploader.queue[0].isReady || uploader.queue[0].isUploading || uploader.queue[0].isSuccess" ng-bind="::translation.uploadButton"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div> <!-- End: Import -->

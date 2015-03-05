@@ -32,8 +32,8 @@ angular.module('webApp')
     };
     
     // Open/close network
-    srv.toggleNetwork = function(status){
-        url = '../componentNewServlet?action=network&status=' + status;
+    srv.toggleNetwork = function(status,timeout){
+        url = '../componentNewServlet?action=network&status=' + status + '&timeout=' + timeout;
         xhr = $http({
             method: 'POST',
             url: url,
@@ -79,8 +79,8 @@ angular.module('webApp')
       isOpenNetwork: function () {
           return srv.isOpenNetwork();
       },
-      toggleNetwork: function (status) {
-          return srv.toggleNetwork(status);
+      toggleNetwork: function (status,timeout) {
+          return srv.toggleNetwork(status,timeout);
       },
       saveInstallCode: function (commissionObj) {
           return srv.saveInstallCode(commissionObj);

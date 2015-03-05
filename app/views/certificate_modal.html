@@ -1,0 +1,14 @@
+<div id="certificateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="certificateModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3 id="certificateModalLabel" ng-bind="::translation.legendModal"></h3>
+  </div>
+  <div class="modal-body">
+    <p ng-bind="::translation.modalMessage"></p>
+    <p ng-show="isDisabled"><img src="images/ajax-loader.gif" alt="Loading"><span ng-bind="::translation.activation"></span></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" ng-bind="::translation.cancelButton" ng-disabled="isDisabled"></button>
+    <button class="btn btn-custom-lighten" ng-click="activateCertificate()" ng-bind="::translation.activateButton" ng-disabled="isDisabled"></button>
+  </div>
+</div>

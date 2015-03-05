@@ -22,6 +22,9 @@ angular
   .constant('Roles', {
 	'ADMIN' : 'admin',
   })
+  .value('WirelessNetwork', {
+	'isOpen' : false,
+  })
   .config(function($stateProvider, $urlRouterProvider) {
   	 // For any unmatched url, redirect to /login
 	 $urlRouterProvider.otherwise('/login');
@@ -43,6 +46,19 @@ angular
 	            'content@home': { 
 	            	templateUrl: 'views/dashboard.html',
 	            	controller: 'DashboardCtrl'
+	            }
+	       }
+	    })
+	    .state('commission', {
+	       url: '/commission',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@commission': { 
+	            	templateUrl: 'views/commission.html',
+	            	controller: 'CommissionCtrl'
 	            }
 	       }
 	    })
@@ -92,6 +108,19 @@ angular
 	            'content@components': { 
 	            	templateUrl: 'views/component_details.html',
 	            	controller: 'ComponentDetailsCtrl'
+	            }
+	       }
+	    })
+	    .state('routers', {
+	       url: '/routers',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@routers': { 
+	            	templateUrl: 'views/router_list.html',
+	            	controller: 'RouterListCtrl'
 	            }
 	       }
 	    })
@@ -147,6 +176,32 @@ angular
 	            }
 	       }
 	    })
+	    .state('import', {
+	       url: '/import',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@import': { 
+	            	templateUrl: 'views/import.html',
+	            	controller: 'ImportCtrl'
+	            }
+	       }
+	    })
+	    .state('export', {
+	       url: '/export',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@export': { 
+	            	templateUrl: 'views/export.html',
+	            	controller: 'ExportCtrl'
+	            }
+	       }
+	    })
 	    .state('password', {
 	       url: '/password',
 	       views: {
@@ -157,6 +212,19 @@ angular
 	            'content@password': { 
 	            	templateUrl: 'views/password.html',
 	            	controller: 'PasswordCtrl'
+	            }
+	       }
+	    })
+	    .state('about', {
+	       url: '/about',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@about': { 
+	            	templateUrl: 'views/about.html',
+	            	controller: 'AboutCtrl'
 	            }
 	       }
 	    });

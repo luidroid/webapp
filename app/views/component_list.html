@@ -1,10 +1,10 @@
 <legend>
 	<h2>
 		<span ng-bind="::translation.title"></span>
-		<!--  Add new components -->
+		<!--  Add new components 
 		<span class="pull-right">
-				<a ui-sref="components.new" class="btn btn-large btn-success" type="button" ng-bind="::translation.newButton" ng-show="isAdmin"></a>
-		</span>	
+				<a ui-sref="components.new" role="button" class="btn btn-custom-lighten btn-large" ng-bind="::translation.newButton" ng-show="isAdmin"></a>
+		</span>	-->
 	</h2>
 </legend>
 
@@ -24,7 +24,7 @@
 
 		<div class="widget" ng-show="isAvailable">
 		  <div class="widget-header">
-		    <i class="icon-th-large"></i>
+		    <i class="icon-list-alt"></i>
 		    <h3 ng-bind="translation.joinedComponents"></h3>
 		  </div>
 		  <div class="widget-table">
@@ -32,7 +32,7 @@
 		      <table class="table table-hover">
 		        <thead>
 		        	<th><a href="" ng-click="predicate = 'name'; reverse=!reverse" ng-bind="::translation.name"></a></th>
-		        	<th><a href="" ng-click="predicate = 'id'; reverse=!reverse" ng-bind="::translation.mac"></a></th>
+		        	<th ng-bind="::translation.mac"></th>
 		        	<th ng-bind="::translation.wirelessAddress"></th>
 		        	<th ng-bind="::translation.guid"></th>
 		        	<th ng-bind="::translation.signal"></th>

@@ -10,7 +10,7 @@
 angular.module('webApp')
   .factory('LoginService', function ($http) {
     // Service logic
-   var srv = {};  
+    var srv = {};  
     var xhr,url;
     
     srv.getLabels = function(){

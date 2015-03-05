@@ -7,13 +7,13 @@
                 <h3 ng-bind="::translation.gateway.legend"></h3>
             </div>
 
-            <div class="widget-content">       
+            <div class="widget-content">
                 <!--<dt ng-bind="::translation.gateway.datetime"></dt>
                 <dd ng-bind="::gateway.datetime"></dd>-->
                 <dt ng-bind="::translation.gateway.id"></dt>
                 <dd ng-bind="::gateway.id"></dd>
-                <dt ng-bind="::translation.gateway.hw"></dt>
-                <dd ng-bind="::gateway.hardwareVersion"></dd>
+                <!--<dt ng-bind="::translation.gateway.hw"></dt>
+                <dd ng-bind="::gateway.hardwareVersion"></dd>-->
                 <dt ng-bind="::translation.gateway.fw"></dt>
                 <dd ng-bind="::gateway.firmwareVersion"></dd>
                 <dt ng-bind="::translation.gateway.os"></dt>
@@ -34,27 +34,17 @@
                     <div class="span6">
                         <span class="chart" easypiechart percent="componentPercent" options="componentOptions">
                             <span class="percent" ng-bind="::usage.component.text"></span>
-                        </span>     
+                        </span> 
+                         <p class="textcenter"><strong ng-bind="::translation.usage.components"></strong></p> 
                     </div>
-                    <!-- Router chart 
+                    <!-- Router chart -->
                     <div class="span6"> 
-                        <span class="chart" easypiechart percent="router.percent" options="router_options">
-                            <span class="percent" ng-bind="usage.router.text"></span>
+                        <span class="chart" easypiechart percent="routerPercent" options="routerOptions">
+                            <span class="percent" ng-bind="::usage.router.text"></span>
                         </span>
-                    </div>
-                     -->
-                </div>
-                
-                <div class="row-fluid">
-                    <div class="span6">
-                        <p class="textcenter"><strong ng-bind="::translation.usage.components"></strong></p>
-                    </div>
-                    <!-- Router label 
-                    <div class="span6"> 
-                        <p class="textcenter"><strong ng-bind="translation.usage_routers"></strong></p>
-                    </div> 
-                    -->
-                </div>               	
+                        <p class="textcenter"><strong ng-bind="::translation.usage.routers"></strong></p>
+                    </div>         
+                </div>             	
             </div>
         </div>
     </div> <!-- End: Usage-->

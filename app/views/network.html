@@ -6,38 +6,136 @@
 		<div class="well well-kabaWhite">
 			<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
 				<legend ng-bind="::translation.legend"></legend>
-				<!--
-				<div class="control-group" ng-class="{ error : errorFields.upnp }"><p></p>
-					<label for="inputName" class="control-label" ng-bind="::translation.upnp"></label>
+				
+				<!-- MAC Address -->
+				<div class="control-group">
+					<label for="inputMacAddress" class="control-label" ng-bind="::translation.macAddress"></label>
 					<div class="controls">
-						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.upnp" ng-click="toggle()" ng-disabled="!isAdmin"></div>
+						<input type="text" ng-model="::network.macAddress" disabled>
+					</div>
+				</div> <!-- end : MAC Address -->
+
+				<!-- UpnP -->
+				<div class="control-group" ng-class="{ error : errorFields.upnp }">
+					<label for="inputUpnp" class="control-label" ng-bind="::translation.upnp"></label>
+					<div class="controls">
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.upnp"  is-disabled="{{isDisabled}}"></div>
 						<span class="help-inline" ng-hide="network.upnp">
 							<span class="label label-warning" ng-bind="::translation.upnpMessage"></span>
 						</span>
 						<span class="help-inline" ng-bind="errorFields.upnp"></span>			      
 					</div>
-				</div>-->
+				</div> <!-- end : UpnP -->
+				
 
-				<div class="control-group" ng-class="{ error : errorFields.dhcp }">
+
+				<!-- Show/hide settings
+				<div class="control-group">					
+					<div class="controls">
+						<label class="checkbox">
+					        <input type="checkbox" ng-model="network.currentDhcp"><span ng-bind="::translation.currentValues"></span>
+					    </label>			      
+					</div>
+				</div> end : Show/hide settings -->
+
+				<!-- Show current settings -->
+				<!-- DHCP -->
+				<div class="control-group">
 					<label for="inputName" class="control-label" ng-bind="::translation.dhcp"></label>
 					<div class="controls">
 						<!--<div toggle-switch ng-model="network.dhcp" on-label="{{::translation.on}}" off-label="{{::translation.off}}" ng-disabled="!isAdmin"></div>-->
-						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.dhcp" ng-click="toggle()" ng-disabled="!isAdmin"></div>
-						<span class="help-inline" ng-bind="errorFields.dhcp"></span>			      
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.currentDhcp"></div>		      
 					</div>
-				</div>	
+				</div>	<!-- end : DHCP -->
 				
-				<div class="control-group" ng-class="{ error : errorFields.ipAddress }">
+				<!-- ip Address -->
+				<div class="control-group" ng-show="network.currentDhcp">
+					<label for="inputCurrentIpAddress" class="control-label" ng-bind="::translation.ipAddress"></label>
+					<div class="controls">
+						<input type="text" name="currentIpAddress" ng-model="::network.currentIpAddress" disabled>
+					</div>
+				</div> <!-- end : ip Address -->
+
+				<!-- cdir 
+				<div class="control-group" ng-show="network.currentDhcp">
+					<label for="inputCurrentCidr" class="control-label" ng-bind="::translation.cidr"></label>
+					<div class="controls">
+						<input type="text" name="currentCidr" ng-model="::network.currentCidr" disabled>
+					</div>
+				</div> <!-- end : cdir -->
+
+				<!-- cdir -->
+				<div class="control-group" ng-show="network.currentDhcp">
+					<label for="inputCidr" class="control-label" ng-bind="::translation.cidr"></label>
+					<div class="controls">
+						<select ng-model="::currentSelectedOption" ng-options="option.name for option in network.currentCidr.options" disabled></select>
+					</div>
+				</div> <!-- end : cdir -->
+
+				<!-- default gateway -->
+				<div class="control-group" ng-show="network.currentDhcp">
+					<label for="inputCurrentDefaultGateway" class="control-label" ng-bind="::translation.defaultGateway"></label>
+					<div class="controls">
+						<input type="text" name="currentDefaultGateway" ng-model="::network.currentDefaultGateway" disabled>
+					</div>
+				</div> <!-- end : default gateway -->
+
+				<!-- dns -->
+				<div class="control-group" ng-show="network.currentDhcp" ng-repeat="currentDns in servers">
+					<label for="inputCurrentDns" class="control-label"><span ng-bind="::translation.dns"></span> {{$index + 1}}</label>
+					<div class="controls">
+						<input type="text" ng-model="::currentDns" disabled>	
+					</div>
+				</div> <!-- end : dns -->
+
+				
+				<!-- Show stored settings -->
+				<!-- DHCP 
+				<div class="control-group" ng-show="!network.currentDhcp">
+					<label for="inputDhcp" class="control-label" ng-bind="::translation.dhcp"></label>
+					<div class="controls">
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="network.dhcp" is-disabled="{{isDisabled}}"></div>			      
+					</div>
+				</div>	end : DHCP -->
+
+				<!-- ip Address -->
+				<div class="control-group" ng-class="{ error : errorFields.IPV4 }" ng-show="!network.currentDhcp">
 					<label for="inputIpAddress" class="control-label" ng-bind="::translation.ipAddress"></label>
 					<div class="controls">
 						<input type="text" name="ipAddress" placeholder="{{::translation.ipAddress_placeholder}}" ng-model="network.ipAddress" ng-model-options="{ debounce: 300 }" ng-change="clean()" ng-disabled="!isAdmin">
-						<span class="help-inline" ng-bind="errorFields.ipAddress"></span>
+						<span class="help-inline" ng-bind="errorFields.IPV4"></span>
 					</div>
-				</div>
+				</div> <!-- end : ip Address -->
+				
+				<!-- cdir -->
+				<div class="control-group" ng-show="!network.currentDhcp">
+					<label for="inputCidr" class="control-label" ng-bind="::translation.cidr"></label>
+					<div class="controls">
+						<select ng-model="selectedOption" ng-options="option.name for option in network.cidr.options" ng-disabled="!isAdmin"></select>
+					</div>
+				</div> <!-- end : cdir -->
+
+				<!-- default gateway -->
+				<div class="control-group" ng-class="{ error : errorFields.IPV4DEFAULTGATEWAY }" ng-show="!network.currentDhcp">
+					<label for="inputDefaultGateway" class="control-label" ng-bind="::translation.defaultGateway"></label>
+					<div class="controls">
+						<input type="text" name="defaultGateway" placeholder="{{::translation.defaultGateway_placeholder}}" ng-model="network.defaultGateway" ng-model-options="{ debounce: 300 }" ng-change="clean()" ng-disabled="!isAdmin">
+						<span class="help-inline" ng-bind="errorFields.IPV4DEFAULTGATEWAY"></span>
+					</div>
+				</div> <!-- end : default gateway -->
+
+				<!-- dns -->
+				<div class="control-group" ng-class="{ error : errorFields.SERVERLIST }" ng-show="!network.currentDhcp">
+					<label for="inputDns" class="control-label" ng-bind="::translation.dns"></label>
+					<div class="controls">
+						<input type="text" name="dns" placeholder="{{::translation.dns_placeholder}}" ng-model="network.dns" ng-model-options="{ debounce: 300 }" ng-change="clean()" ng-disabled="!isAdmin">
+						<span class="help-inline" ng-bind="errorFields.SERVERLIST"></span>
+					</div>
+				</div> <!-- end : dns -->					
 							
 				<div class="control-group">
 					<div class="controls">
-						<button id="saveButton" type="submit" class="btn btn-custom-lighten" ng-bind="::translation.saveButton" ng-show="isAdmin"></button>
+						<button id="saveButton" type="submit" class="btn btn-custom-lighten" ng-disabled="form.$invalid" ng-bind="::translation.saveButton" ng-show="isAdmin"></button>
 					</div>
 				</div>
 			</form>

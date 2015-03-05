@@ -1,0 +1,13 @@
+<div id="commissionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="commissionModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+    <h3 id="commissionModalLabel" ng-bind="::translation.dialog.title"></h3>
+  </div>
+  <div class="modal-body">
+    <p ng-bind="::translation.dialog.message"></p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true" ng-bind="::translation.dialog.cancelButton"></button>
+    <button class="btn btn-custom-lighten" ng-click="goToView()" ng-bind="::translation.dialog.okButton"></button>
+  </div>
+</div>

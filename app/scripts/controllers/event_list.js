@@ -23,13 +23,13 @@ angular.module('webApp')
 	  		goToLoginView();
 	  });
 	  
-	  $scope.nextPage = function(){
+	  $scope.nextPage = function(){ console.log('hier');
 		  if($scope.busy){
 		  	return;
 		  } 
 		  $scope.busy = true;
-		  
-		  EventService.getEvents(afterValue).then(function(res){
+		 
+		  EventService.getEvents(afterValue).then(function(res){ console.log('get event ok');
 		  	 var items = res.data.events;
 		  	 if(items){
 		  		for (var i = 0; i < items.length; i++) {  		
@@ -49,6 +49,7 @@ angular.module('webApp')
 		  	 }
 		  }, function(){
 			  goToLoginView();
+			 
 		  });   
 		  
 	  };

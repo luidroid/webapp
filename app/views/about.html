@@ -1,0 +1,40 @@
+<legend>
+	<h2>
+		<span ng-bind="::translation.title"></span>
+		<span class="pull-right">
+			<a ng-href="#/about/edit" role="button" class="btn btn-custom-lighten btn-large" ng-bind="::translation.editButton"></a>
+		</span>
+	</h2>
+</legend>
+
+<div class="row-fluid">			
+	
+	<div class="span6"> <!-- Info -->
+		<div class="widget">
+            <div class="widget-header">
+                <i class="icon-info-sign"></i>
+                <h3 ng-bind="::translation.gateway.legend"></h3>
+            </div>
+
+            <div class="widget-content">       
+                <!--<dt ng-bind="::translation.gateway.datetime"></dt>
+                <dd ng-bind="::gateway.datetime"></dd>-->
+                <dt ng-bind="::translation.gateway.id"></dt>
+                <dd ng-bind="::gateway.id"></dd>
+                <dt ng-bind="::translation.gateway.hw"></dt>
+                <dd ng-bind="::gateway.hardwareVersion"></dd>
+                <dt ng-bind="::translation.gateway.fw"></dt>
+                <dd ng-bind="::gateway.firmwareVersion"></dd>
+                <dt ng-bind="::translation.gateway.os"></dt>
+                <dd ng-bind="::gateway.osVersion"></dd>
+            </div>
+        </div>
+	</div> <!-- End: Info -->
+	
+	<!--Update -->
+	<div class="span6"> 
+		
+	</div> <!-- End: Update -->
+
+</div>
+

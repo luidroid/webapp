@@ -4,7 +4,7 @@
 
 <div class="row-fluid">
 	<div class="span12">
-
+		<!-- Original
 		<div class="well well-kabaWhite">
 			<div class="span12">				 
 				<form class="form-inline">
@@ -18,7 +18,48 @@
 				  </div>				  
 				</form>
 			</div>
+		</div> -->
+
+		<div class="well well-kabaWhite">
+			<form name="commissionForm" class="form-horizontal">
+				
+				<div class="control-group" ng-class="{ error : commissionForm.timeout.$invalid && commissionForm.timeout.$dirty }">
+					<label for="inputTimeout" class="control-label" ng-bind="::translation.openTimeout"></label>
+					<div class="controls">
+						<input type="number" name="timeout" ng-model="commissionTimeout" ng-model-options="{ debounce: 250 }" ng-change="clean()"placeholder="{{::translation.openTimeoutPlaceholder}}" min="1" max="1440" required>
+						<span class="help-inline" ng-show="commissionForm.timeout.$error.min || commissionForm.timeout.$error.max" ng-bind="::translation.rangeField"></span>
+						<span class="help-inline" ng-show="commissionForm.timeout.$error.number" ng-bind="::translation.allowedField"></span>
+						<span class="help-inline" ng-show="commissionForm.timeout.$dirty && commissionForm.timeout.$error.required && !commissionForm.timeout.$error.number" ng-bind="::translation.requiredField"></span>	
+					</div>
+				</div>
+
+				<div class="control-group">
+					<label for="inputTimeou" class="control-label" ng-bind="::translation.openNetwork"></label>
+					<div class="controls">
+						<div toggle-switch class="switch-primary" on-label="{{::translation.on}}" off-label="{{::translation.off}}" model="wnetwork" ng-click="toggle()" is-disabled="{{isFormValid(commissionForm.$valid)}}"></div>
+					  	<span ng-show="wnetwork">
+						    <span ng-bind="::translation.openParenthesis"></span>
+						  	<timer end-time="endTime" autostart="false">{{hours}} <span ng-bind="::translation.hours"></span> {{minutes}} <span ng-bind="::translation.minutes"></span> {{seconds}} <span ng-bind="::translation.seconds"></span></timer>
+						 </span>
+					</div>
+				</div>
+
+				
+				<!--
+				<div class="control-group" ng-class="{ error : timeoutForm.timeout.$invalid && timeoutForm.timeout.$dirty || errorFields.timeout}">
+					<label for="inputTimeout" class="control-label">Timeout</label>
+					<div class="controls">
+						<input type="number" name="timeout" ng-model="commission.timeout" ng-model-options="{ debounce: 200 }" ng-change="clean()" ng-disabled="!isAdmin" placeholder="{{::translation.timeout_placeholder}}" min="1" max="1440" required>
+						<span class="help-inline" ng-show="timeoutForm.timeout.$error.min || timeoutForm.timeout.$error.max" ng-bind="::translation.rangeField"></span>
+						<span class="help-inline" ng-show="timeoutForm.timeout.$error.number" ng-bind="::translation.allowedField"></span>
+						<span class="help-inline" ng-show="timeoutForm.timeout.$dirty && timeoutForm.timeout.$error.required && !timeoutForm.timeout.$error.number" ng-bind="::translation.requiredField"></span>
+						<span class="help-inline" ng-bind="errorFields.timeout"></span>		
+					</div>
+				</div>
+				-->
+			</form>
 		</div>
+
 
 		<!-- Messages template -->
 		<div ng-include="'views/message_template.html'"></div>
@@ -76,7 +117,6 @@
 				  </div>
 				</div>
 				<div class="control-group">				
-					<button class="btn" ng-click="cancel()" ng-bind="::translation.cancelButton"></button>
 					<button id="saveButton" class="btn btn-custom-lighten" ng-disabled="form.$invalid || !allChecked" ng-bind="::translation.saveButton"></button>	
 				</div> 			
 			</form>

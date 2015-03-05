@@ -21,7 +21,7 @@
                         <div class="nav-collapse collapse">
                             <ul class="nav">
                                 <li ng-class="getNavbarClass('home')">
-                                    <a class="dropdown-toggle" ui-sref="home"><i class="icon-home"></i><span ng-bind="::translation.home"></span></a>
+                                    <a class="dropdown-toggle" href="" ng-click="checkView('home')"><i class="icon-home"></i><span ng-bind="::translation.home"></span></a>
                                 </li>
 
                                 <li class="divider-vertical"></li>
@@ -44,19 +44,29 @@
     <div class="main">
         <div class="main-inner">
             <div class="sidebar sidebar-fixed"> <!-- Sidebar -->
-                <a class="btn btn-sidebar" data-target=".sidebar-collapse"
-                data-toggle="collapse"><span class=
-                "icon-bar"></span><span class="icon-bar"></span><span class=
-                "icon-bar"></span></a>
+                <a class="btn btn-sidebar" data-target=".sidebar-collapse" data-toggle="collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
 
-                <div class="sidebar-collapse collapse">
+                <div class="sidebar-collapse">
                     <ul class="nav nav-list" id="accordion1">
+                        <li ng-class="getNavbarClass('commission')">
+                            <a ui-sref="commission"><i class="icon-screenshot"></i><span ng-bind="::translation.commission"></span></a>
+                        </li>
+
                         <li ng-class="getNavbarClass('components')">
-                            <a ui-sref="components"><i class="icon-th-large"></i><span ng-bind="::translation.components"></span></a>
+                           <!-- <a ui-sref="components"><i class="icon-th-large"></i><span ng-bind="::translation.components"></span></a>-->
+                           <a href="" ng-click="checkView('components')"><i class="icon-th-large"></i><span ng-bind="::translation.components"></span></a>
+                        </li>
+
+                        <li ng-class="getNavbarClass('routers')">
+                            <a href="" ng-click="checkView('routers')"><i class="icon-bullhorn"></i><span ng-bind="::translation.routers"></span></a>
                         </li>
 
                         <li ng-class="getNavbarClass('events')">
-                            <a ui-sref="events"><i class="icon-list-alt"></i><span ng-bind="::translation.events"></span></a>
+                           <a href="" ng-click="checkView('events')"><i class="icon-list-alt"></i><span ng-bind="::translation.events"></span></a>
                         </li>
 
                         <li class="divider"></li>
@@ -64,24 +74,41 @@
                         <li class="nav-header" ng-bind="::translation.settings"></li>
 
                         <li ng-class="getNavbarClass('network')">
-                            <a ui-sref="network"><i class="fa fa-sitemap"></i><span ng-bind="::translation.network"></span></a>
+                            <a href="" ng-click="checkView('network')"><i class="fa fa-sitemap fa-fw"></i><span ng-bind="::translation.network"></span></a>
                         </li>
 
                         <li ng-class="getNavbarClass('wnetwork')">
-                            <a ui-sref="wnetwork"><i class="fa fa-wifi"></i><span ng-bind="::translation.wnetwork"></span></a>
+                            <a href="" ng-click="checkView('wnetwork')"><i class="fa fa-wifi fa-fw"></i><span ng-bind="::translation.wnetwork"></span></a>
                         </li>
 
-                        <li ng-class="getNavbarClass('certificate')">
-                            <a ui-sref="certificate"><i class="icon-certificate"></i><span ng-bind="::translation.certificate"></span></a>
+                        <li ng-class="getNavbarClass('certificate')" ng-show="isAdmin">
+                            <a href="" ng-click="checkView('certificate')"><i class="icon-certificate"></i><span ng-bind="::translation.certificate"></span></a>
                         </li> 
 
-                        <li ng-class="getNavbarClass('password')">
-                            <a ui-sref="password"><i class="icon-user"></i><span ng-bind="::translation.password"></span></a>
-                        </li>                       
+                        <li ng-class="getNavbarClass('import')" ng-show="isAdmin">
+                            <a href="" ng-click="checkView('import')"><i class="icon-upload"></i><span ng-bind="::translation.importFile"></span></a>
+                        </li>
+
+                        <li ng-class="getNavbarClass('export')" ng-show="isAdmin">
+                            <a href="" ng-click="checkView('export')"><i class="icon-save"></i><span ng-bind="::translation.export"></span></a>
+                        </li>
+
+                        <li ng-class="getNavbarClass('password')" ng-show="isAdmin">
+                            <a href="" ng-click="checkView('password')"><i class="icon-user"></i><span ng-bind="::translation.password"></span></a>
+                        </li> 
+
+                        <li class="divider" ng-show="false"></li> 
+
+                        <li ng-class="getNavbarClass('about')" ng-show="false">
+                            <a href="" ng-click="checkView('about')"><i class="icon-hdd"></i><span ng-bind="::translation.about"></span></a>
+                        </li> 
+
                     </ul>
                 </div>
-            </div> <!-- End: Sidebar -->
 
+               
+                
+            </div> <!-- End: Sidebar -->
             <div class="page">
                 <span ui-view="content"></span>
             </div>
@@ -93,3 +120,6 @@
             &nbsp;&copy; {{::currentYear}} {{::translation.company}}
         </div>
     </footer>
+
+<!-- Modal -->
+<div ng-include="'views/commission_modal.html'"></div>

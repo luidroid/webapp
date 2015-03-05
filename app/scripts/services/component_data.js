@@ -49,19 +49,42 @@ angular.module('webApp')
       url = '../componentDetailServlet?action=identify&id=' + id;
       return $http.get(url);
     };
+
+    srv.updateComponent = function(id){
+      url = '../componentDetailServlet?action=update&id=' + id;
+      return $http.get(url);
+    };
+
+    srv.isSoftwareInstalled = function(id){
+      url = '../componentDetailServlet?action=software&id=' + id;
+      return $http.get(url);
+    };
+
     
     // New Components
     srv.getComponentNewLabels = function(){
         url = '../componentNewServlet?action=labels';
         return $http.get(url);
     };
+
     srv.getNewComponents = function(){
         url = '../componentNewServlet?action=commission';
         return $http.get(url);
     };
+
+    srv.checkCachedComponents = function(components){
+        url = '../commissionServlet?action=check';
+        xhr = $http({
+            method: 'GET',
+            url: url,
+            params: components,
+            headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+        });
+        return xhr;
+    };
     
     srv.saveComponents = function(components){
-      url = '../componentNewServlet?action=save';
+        url = '../componentNewServlet?action=save';
         xhr = $http({
             method: 'POST',
             url: url,
@@ -109,6 +132,12 @@ angular.module('webApp')
       getComponentDetailLabels: function () {
         return srv.getComponentDetailLabels();
       },
+      updateComponent: function (id) {
+        return srv.updateComponent(id);
+      },
+      isSoftwareInstalled: function (id) {
+        return srv.isSoftwareInstalled(id);
+      },
       getComponentEditLabels: function () {
           return srv.getComponentEditLabels();
       },
@@ -117,6 +146,9 @@ angular.module('webApp')
       },
       getNewComponents: function () {
           return srv.getNewComponents();
+      },
+      checkCachedComponents: function (components) {
+          return srv.checkCachedComponents(components);
       },
       saveComponents: function (components) {
           return srv.saveComponents(components);

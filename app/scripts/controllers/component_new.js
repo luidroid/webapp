@@ -1,3 +1,4 @@
+/*global jQuery:false*/
 'use strict';
 
 /**
@@ -22,7 +23,15 @@ angular.module('webApp')
   	  var serviceInterval,
 	  	  service,
 	  	  stopService;
-	  	  
+	  
+	  $scope.commissionTimeout = 30;
+	  var isValid = false;
+
+	  $scope.isFormValid = function(isDisabled){
+	  	isValid = isDisabled;
+	  	return isValid ? '' : 'true';	  
+	  };
+
 	  // Labels
 	  ComponentService.getComponentNewLabels().then(function(res){ 
 	  	 $scope.translation = res.data;
@@ -62,8 +71,42 @@ angular.module('webApp')
       });
 	  
 	  // open/close wireless network
-	  $scope.toggle = function(){
-		  WirelessNetworkService.toggleNetwork($scope.wnetwork).then(function(res){ 
+	  $scope.toggle = function(){		
+	  		if(isValid){
+	  			WirelessNetworkService.toggleNetwork($scope.wnetwork,$scope.commissionTimeout).then(function(res){ 
+				  $scope.wnetwork = res.data.wnetwork;			  
+				  if($scope.wnetwork){				  
+					  if(res.data.errors){ 
+						  $scope.title = res.data.title;
+						  $scope.errors = res.data.errors;
+						  $scope.isError = true;
+					  }					 				  				 
+					  $scope.isLoading = false;				 
+					  $scope.endTime = jQuery.now() + res.data.endTime; // TODO
+					  $timeout(function(){
+					     $scope.$broadcast('timer-start');
+					  },0);				  
+					  // Don't start a new service request if it exists
+					  if(angular.isDefined(serviceInterval)){
+					  	return; 
+					  } 
+					  serviceInterval = $interval(service, 3000);
+				  }
+				  else{
+					  stopService();
+					  $scope.isLoading = true;
+					  $scope.isEmpty = true; 
+					  $scope.isWarning = false;
+					  $scope.components = [];
+				  }	
+				 
+			  }, function(error){
+				  if(error.status === HttpStatus.FORBIDDEN){
+			  			goToLoginView();
+			  	  }
+			  });	
+	  		}
+		  /*WirelessNetworkService.toggleNetwork($scope.wnetwork).then(function(res){ 
 			  $scope.wnetwork = res.data.wnetwork;			  
 			  if($scope.wnetwork){				  
 				  if(res.data.errors){ 
@@ -93,9 +136,9 @@ angular.module('webApp')
 			 
 		  }, function(error){
 			  if(error.status === HttpStatus.FORBIDDEN){
-		  			goToLoginView();
+		  			//goToLoginView();
 		  	  }
-		  });		  		  
+		  });	*/	  		  
 	  };
 	  
 	  // Get new components
@@ -178,12 +221,7 @@ angular.module('webApp')
 		  });
 	  };
 	  
-	  // Cancel button
-	  $scope.cancel = function(){
-		  stopService();
-		  goToComponentView();
-	  };
-	  
+	  	  
 	  // Save button
 	  $scope.submit = function(){
 		  $scope.isWarning = false;
@@ -252,7 +290,7 @@ angular.module('webApp')
 			  $state.go('login');
 	   };
 	   
-	   function getIndexByComponentId(id,arr){
+	  function getIndexByComponentId(id,arr){
 		   var res = -1;
 		   angular.forEach(arr, function(item,index){
 				 if(id === item.id){
