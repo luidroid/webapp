@@ -28,7 +28,8 @@ angular.module('webApp')
 	  $scope.errors = {};
 	  $scope.errorFields = {};
 	  $scope.isSuccess = false;
-	  $scope.messages = {}; 
+	  $scope.messages = {};
+	  $scope.dhcpFlag = true;  
 	  var networkTmp = angular.copy($scope.network);
 		
 	  // Get user role
@@ -51,11 +52,15 @@ angular.module('webApp')
 	  });
 	  
 	  // Get initial network values
-	  NetworkService.getNetworkValues().then(function(res){
+	  NetworkService.getNetworkValues().then(function(res){ console.log(res.data);
+	  	  if(!res.data.currentDhcp){
+	  	  	$scope.dhcpFlag = false;
+	  	  }
 	  	  $scope.network = res.data;
 		  $scope.servers = res.data.currentDns;
-		  $scope.currentSelectedOption = $scope.network.currentCidr.options[res.data.currentCidr.selectedPos]; 
   	  	  $scope.selectedOption = $scope.network.cidr.options[res.data.cidr.selectedPos];
+  	  	  $scope.network.currentCidr = $scope.network.cidr.options[res.data.cidr.selectedPos].name; 
+
 	  }, function(error){
 		  if(error.status === HttpStatus.FORBIDDEN){
 	  			goToLoginView();
@@ -68,23 +73,28 @@ angular.module('webApp')
 		  NetworkService.saveNetworkValues($scope.network).then(function(res){
 			  if(res.data.errorFields){ 
 				  $scope.errorFields = res.data.errorFields;
-				  //$scope.currentSettings = false;
 				  if(res.data.errors){
 					  $scope.isError = true;
 					  $scope.title = res.data.errors.title;
 					  $scope.errors = res.data.errors.messages;
 					  $scope.isSuccess = !$scope.isError;
 				  }
+				   $scope.isInfoRestartDevice = false;
 			  }
 			  else{
+			  	  var dhcpFlag = $scope.network.currentDhcp;
 				  $scope.isSuccess = true;
 				  $scope.title = res.data.success.title;
 				  $scope.messages = res.data.success.messages;
 				  $scope.isError = !$scope.isSuccess;
 				  $scope.errorFields = {};
+				  if(!dhcpFlag){
+				  	 $scope.dhcpFlag = dhcpFlag;
+				  } 
+				  $scope.isInfoRestartDevice = true;
 			  }	
 			  networkTmp = angular.copy($scope.network);
-			  angular.element('#saveButton').blur();
+			  //angular.element('#saveButton').blur();
 		  }, function(error){
 			  if(error.status === HttpStatus.FORBIDDEN){
 		  			goToLoginView();

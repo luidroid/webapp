@@ -20,8 +20,8 @@ angular.module('webApp')
     };
     
     // Get initial commission values
-    srv.getCommissionValues = function(){
-        url = '../settingsWirelessNetworkServlet?action=commissionValues';
+    srv.getInitialValues = function(){
+        url = '../settingsWirelessNetworkServlet?action=initialValues';
         return $http.get(url);
     };
     
@@ -43,38 +43,23 @@ angular.module('webApp')
     };
         
     // Save install code
-    srv.saveInstallCode = function(commissionObj){
-      url = '../settingsWirelessNetworkServlet?action=save';
+    srv.saveInstallCode = function(installcode){
+        url = '../settingsWirelessNetworkServlet?action=save&installcode=' + installcode;
         xhr = $http({
             method: 'POST',
             url: url,
-            params: commissionObj,
             headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
         });
         return xhr;
     }; 
     
-    // Save timeout value
-    srv.saveTimeout = function(commissionObj){
-      url = '../settingsWirelessNetworkServlet?action=timeout';
-        xhr = $http({
-            method: 'POST',
-            url: url,
-            params: commissionObj,
-            headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-        });
-        return xhr;
-    }; 
-
-
-
     // Public API here
     return {
       getLabels: function () {
           return srv.getLabels();
       },
-      getCommissionValues: function () {
-          return srv.getCommissionValues();
+      getInitialValues: function () {
+          return srv.getInitialValues();
       },
       isOpenNetwork: function () {
           return srv.isOpenNetwork();
@@ -82,11 +67,8 @@ angular.module('webApp')
       toggleNetwork: function (status,timeout) {
           return srv.toggleNetwork(status,timeout);
       },
-      saveInstallCode: function (commissionObj) {
-          return srv.saveInstallCode(commissionObj);
-      },
-      saveTimeout: function (commissionObj) {
-          return srv.saveTimeout(commissionObj);
+      saveInstallCode: function (installcode) {
+          return srv.saveInstallCode(installcode);
       }
     };
   });

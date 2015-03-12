@@ -9,14 +9,15 @@
  */
 angular.module('webApp')
   .controller('WirelessNetworkCtrl', function ($scope,$state,HttpStatus,UserService,WirelessNetworkService) {
-    $scope.commission = {}; 
+      $scope.installcode = ''; 
 	  $scope.title = '';
       $scope.isError = false;
 	  $scope.errors = {};
-	  $scope.errorFields = {};
+	  $scope.errorField = '';
 	  $scope.isSuccess = false;
 	  $scope.messages = {}; 
-	  var commissionTmp = angular.copy($scope.commission);
+
+	  var installcodeTmp = angular.copy($scope.installcode);
 	  	  
 	  // Get user role
 	  UserService.getUser().then(function(res){
@@ -34,83 +35,57 @@ angular.module('webApp')
 	  	  }
 	  });
 	  
-	  // Get initial commission values
-	  WirelessNetworkService.getCommissionValues().then(function(res){
-		  $scope.commission = res.data;
+	  // Get initial installcode values
+	 /* WirelessNetworkService.getInitialValues().then(function(res){
+		  $scope.installcode = res.data;
 	  }, function(error){
 		  if(error.status === HttpStatus.FORBIDDEN){
 	  			goToLoginView();
 	  	  }
-	  });
+	  });*/
 
-	  // Save commission settings values
+	  // Save installcode settings values
 	  $scope.submit = function(){
-		  WirelessNetworkService.saveInstallCode($scope.commission).then(function(res){
-			  $scope.title = res.data.title;
-			  if(res.data.errors){
+		  WirelessNetworkService.saveInstallCode($scope.installcode).then(function(res){
+			 
+			  if(res.data.errorField){
+			  	  $scope.isSuccess = false;
+				  $scope.errorField = res.data.errorField; 
+			  }
+			  else if(res.data.errors){
+			  	  $scope.title = res.data.title;
 				  $scope.isError = true;
-				  $scope.errors = res.data.errors;
-				  if(res.data.errorFields){
-					  $scope.errorFields = res.data.errorFields; 
-				  }
+				  $scope.errors = res.data.errors;	  
 				  $scope.isSuccess = !$scope.isError;
 			  }
-			  
-			  if(res.data.success){
+			  else{
+			  	  $scope.title = res.data.title;
 				  $scope.isSuccess = true;
 				  $scope.messages = res.data.success;
 				  $scope.isError = !$scope.isSuccess;
-				  $scope.errorFields = {};
-			  }	
-			  commissionTmp = angular.copy($scope.commission);
+				  $scope.errorField = '';
+				  $scope.checked = false;
+			  }
+			  installcodeTmp = angular.copy($scope.installcode);
 			  angular.element('#saveButton').blur();
+
 		  }, function(error){ 
 			  if(error.status === HttpStatus.FORBIDDEN){
 		  			goToLoginView();
 		  	  }
 		  });
 	  };
-	  
-	 // Save timeout settings 
-	  $scope.submitTimeoutForm = function(){
-		  WirelessNetworkService.saveTimeout($scope.commission).then(function(res){
-			  $scope.title = res.data.title;
-			  if(res.data.errors){
-				  $scope.isError = true;
-				  $scope.errors = res.data.errors;
-				  if(res.data.errorFields){
-					  $scope.errorFields = res.data.errorFields; 
-				  }
-				  $scope.isSuccess = !$scope.isError;
-			  }
-			  
-			  if(res.data.success){
-				  $scope.isSuccess = true;
-				  $scope.messages = res.data.success;
-				  $scope.isError = !$scope.isSuccess;
-				  $scope.errorFields = {};
-			  }	
-			  commissionTmp = angular.copy($scope.commission);
-			  angular.element('#saveTimeoutButton').blur();
-		  }, function(error){ 
-			  if(error.status === HttpStatus.FORBIDDEN){
-		  			goToLoginView();
-		  	  }
-		  });
-	  };
-	  
+	   
 	  
 	  // Cleans error message if field is edited after sending form
 	  $scope.clean = function(){
-		  if(commissionTmp.installationCode !== $scope.commission.installationCode){
-			  $scope.errorFields.installationCode = '';
-		  }
-		  if(commissionTmp.timeout !== $scope.commission.timeout){
-			  $scope.errorFields.timeout = '';
+		  if(installcodeTmp !== $scope.installcode){
+			  $scope.errorField = '';
 		  }
 	  };
 	  	  
 	  var goToLoginView = function(){
 		  $state.go('login');
 	  };
+
   });

@@ -80,7 +80,11 @@
                         <li ng-class="getNavbarClass('wnetwork')">
                             <a href="" ng-click="checkView('wnetwork')"><i class="fa fa-wifi fa-fw"></i><span ng-bind="::translation.wnetwork"></span></a>
                         </li>
-
+                        <!--
+                        <li ng-class="getNavbarClass('timesetting')" ng-show="isAdmin">
+                            <a href="" ng-click="checkView('timesetting')"><i class="icon-time"></i><span ng-bind="::translation.timesetting"></span></a>
+                        </li> 
+                        -->
                         <li ng-class="getNavbarClass('certificate')" ng-show="isAdmin">
                             <a href="" ng-click="checkView('certificate')"><i class="icon-certificate"></i><span ng-bind="::translation.certificate"></span></a>
                         </li> 

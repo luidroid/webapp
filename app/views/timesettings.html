@@ -1,0 +1,25 @@
+
+<div class="row-fluid"> <!-- Date/Time -->
+	<div class="span12">
+		<div class="well well-kabaWhite">
+			<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
+				<legend>
+					<span ng-bind="::translation.legend"></span>
+				</legend>
+
+				<div class="control-group" ng-class="{ error :  isFileuploadInfo || isFileuploadWarning }">
+					<label for="inputDatetime" class="control-label" ng-bind="::translation.inputDatetime"></label>
+					<div class="controls">
+						<input type="text" name="inputDatetime" ng-model="timesetting" disabled>
+					</div>
+				</div>
+					
+				<div class="control-group">
+					<div class="controls">
+						<button type="submit" id="saveButton" class="btn btn-custom-lighten" ng-bind="::translation.saveButton"></button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div> <!-- End: Date/Time -->

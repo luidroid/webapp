@@ -163,6 +163,19 @@ angular
 	            }
 	       }
 	    })
+	    .state('timesetting', {
+	       url: '/timesetting',
+	       views: {
+	            '': { 
+	            	templateUrl: 'views/main.html',
+	            	controller: 'MainCtrl'
+	            },
+	            'content@timesetting': { 
+	            	templateUrl: 'views/timesettings.html',
+	            	controller: 'TimesettingCtrl'
+	            }
+	       }
+	    })
 	    .state('certificate', {
 	       url: '/certificate',
 	       views: {

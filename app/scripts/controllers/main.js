@@ -1,4 +1,3 @@
-/*global $:false*/
 'use strict';
 
 /**
@@ -73,7 +72,7 @@ angular.module('webApp')
 
     // Warning dialog if user reloads page while wireless network is open
     var windowElement = angular.element($window);
-    windowElement.on('beforeunload', function (event) {
+    windowElement.on('beforeunload', function () {
       if(WirelessNetwork.isOpen){    
         return $scope.translation.dialog.message;      
       }    

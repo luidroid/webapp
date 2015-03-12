@@ -90,6 +90,12 @@ angular.module('webApp')
       });
     };
 
+    angular.element('#certFileUpload').change(function (){
+       var filename = angular.element(this).val();
+       $scope.selectedFile = filename;
+       //angular.element('#selectedFile').html(fileName);
+    });
+
    /* service = function(){
       CertificateService.isHostActivated().then(function(){
           console.log('host is activ');
@@ -162,6 +168,7 @@ angular.module('webApp')
       uploader.onCompleteAll = function() {
           console.info('onCompleteAll');  
           angular.element('#certFileUpload').val('');
+          $scope.selectedFile = '';
           $scope.certificatePassword = '';        
       };
 

@@ -7,6 +7,10 @@
 			<form name="form" class="form-horizontal" ng-submit="submit()" novalidate>
 				<legend ng-bind="::translation.legend"></legend>
 				
+				<div class="alert alert-block" ng-show="isInfoRestartDevice">
+					<p ng-bind="::translation.infoRestartDevice"></p>
+				</div>
+
 				<!-- MAC Address -->
 				<div class="control-group">
 					<label for="inputMacAddress" class="control-label" ng-bind="::translation.macAddress"></label>
@@ -49,31 +53,24 @@
 				</div>	<!-- end : DHCP -->
 				
 				<!-- ip Address -->
-				<div class="control-group" ng-show="network.currentDhcp">
+				<div class="control-group" ng-show="network.currentDhcp && dhcpFlag">
 					<label for="inputCurrentIpAddress" class="control-label" ng-bind="::translation.ipAddress"></label>
 					<div class="controls">
 						<input type="text" name="currentIpAddress" ng-model="::network.currentIpAddress" disabled>
 					</div>
 				</div> <!-- end : ip Address -->
 
-				<!-- cdir 
-				<div class="control-group" ng-show="network.currentDhcp">
+				<!-- cidr -->
+				<div class="control-group" ng-show="network.currentDhcp && dhcpFlag">
 					<label for="inputCurrentCidr" class="control-label" ng-bind="::translation.cidr"></label>
 					<div class="controls">
 						<input type="text" name="currentCidr" ng-model="::network.currentCidr" disabled>
 					</div>
 				</div> <!-- end : cdir -->
 
-				<!-- cdir -->
-				<div class="control-group" ng-show="network.currentDhcp">
-					<label for="inputCidr" class="control-label" ng-bind="::translation.cidr"></label>
-					<div class="controls">
-						<select ng-model="::currentSelectedOption" ng-options="option.name for option in network.currentCidr.options" disabled></select>
-					</div>
-				</div> <!-- end : cdir -->
 
 				<!-- default gateway -->
-				<div class="control-group" ng-show="network.currentDhcp">
+				<div class="control-group" ng-show="network.currentDhcp && dhcpFlag">
 					<label for="inputCurrentDefaultGateway" class="control-label" ng-bind="::translation.defaultGateway"></label>
 					<div class="controls">
 						<input type="text" name="currentDefaultGateway" ng-model="::network.currentDefaultGateway" disabled>
@@ -81,7 +78,7 @@
 				</div> <!-- end : default gateway -->
 
 				<!-- dns -->
-				<div class="control-group" ng-show="network.currentDhcp" ng-repeat="currentDns in servers">
+				<div class="control-group" ng-show="network.currentDhcp && dhcpFlag" ng-repeat="currentDns in servers">
 					<label for="inputCurrentDns" class="control-label"><span ng-bind="::translation.dns"></span> {{$index + 1}}</label>
 					<div class="controls">
 						<input type="text" ng-model="::currentDns" disabled>	

@@ -1,15 +1,7 @@
-<legend>
-	<h2>
-		<span ng-bind="::translation.title"></span>
-		<!--  Add new components 
-		<span class="pull-right">
-				<a ui-sref="components.new" role="button" class="btn btn-custom-lighten btn-large" ng-bind="::translation.newButton" ng-show="isAdmin"></a>
-		</span>	-->
-	</h2>
-</legend>
-
 <div class="row-fluid">
     <div class="span12">
+      <div class="well well-kabaWhite">
+        <legend ng-bind="::translation.title"></legend>   
     	<!-- Commission message -->
     	<div class="alert alert-block alert-success" ng-show="isCommission">
 		  <h4 ng-bind="::translation.commissionTitle"></h4>
@@ -55,6 +47,7 @@
 		      </table>
 		    </div>	    
 		  </div>
-		</div> 					
+		</div> 
+	  </div>					
 	</div>	
 </div>

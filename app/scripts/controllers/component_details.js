@@ -66,7 +66,7 @@ angular.module('webApp')
 				  }
 				  drawSignal($scope.component.signal.strength);
 
-				  if($scope.component.software.availableVersion){
+				  if($scope.component.software.availableVersions.length > 0){
 				  	 $scope.isAvailableSoftware = true;
 				  }  
 			  }	  
@@ -78,16 +78,16 @@ angular.module('webApp')
 	  	  }
 	  });
 
-	  $scope.updateComponent = function (){ console.log('try update');
-	  		if(angular.isDefined(updateServiceInterval)){
-				return; 
-			} 
-			console.log('update now');
-	  		ComponentService.updateComponent($scope.component.id).then(function(res){
-		  		$scope.isInstalling = true;		  		
-				updateServiceInterval = $interval(updateService, 3000);
-		  	});
-	
+	  $scope.updateComponent = function (){
+	  		if(!$scope.isInstalling){
+	  			if(angular.isDefined(updateServiceInterval)){
+					return false; 
+				} 
+		  		ComponentService.updateComponent($scope.component.id).then(function(){
+			  		$scope.isInstalling = true;		  		
+					updateServiceInterval = $interval(updateService, 10000);
+			  	});
+	  		}
 	  };
 	  
 	  // Identify component
@@ -138,22 +138,20 @@ angular.module('webApp')
 	  };
 
 	  updateService = function(){ 	  
-  		ComponentService.isSoftwareInstalled($scope.component.id).then(function(res){ console.log(res.data);
+  		ComponentService.isSoftwareInstalled($scope.component.id).then(function(res){ //console.log(res.data);
 	  		if(res.data.errors){
 				stopUpdateService();
-				$scope.isAvailableSoftware = false;
 		  		$scope.isInstalling = false;
 		  		$scope.installationOk = false;
 		  		$scope.installationFailed = true;
 	  		}
 
-  			if(res.data.isInstalled){ console.log(' install ok');	
+  			if(res.data.isInstalled){ console.log('install ok');	
 	  			stopUpdateService();
-	  			$scope.isAvailableSoftware = false;
 	  			$scope.isInstalling = false;
 	  			$scope.installationOk = true;
 	  			$scope.installationFailed = false;
-	  			$scope.component.software.appVersion = $scope.component.software.availableVersion;
+	  			//$scope.component.software.appVersion = $scope.component.software.availableVersion;
 	  		}
 	  		  		
 	  	});

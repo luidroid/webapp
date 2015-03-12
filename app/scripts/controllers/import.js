@@ -62,6 +62,11 @@ angular.module('webApp')
   		  }
 	 };
 
+	 angular.element('#importFileUpload').change(function (){
+        var filename = angular.element(this).val();
+        $scope.selectedFile = filename;
+     });
+
 	   // CALLBACKS
 	  uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
 	      console.info('onWhenAddingFileFailed', item, filter, options);
@@ -117,6 +122,7 @@ angular.module('webApp')
 	  uploader.onCompleteAll = function() {
 	      console.info('onCompleteAll');  
 	      angular.element('#importFileUpload').val('');      
+	      $scope.selectedFile = '';
 	  };
 
       //console.info('uploader', uploader);

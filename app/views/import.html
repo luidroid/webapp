@@ -10,7 +10,12 @@
 				<div class="control-group" ng-class="{ error :  isFileuploadInfo || isFileuploadWarning }">
 					<label for="certificate" class="control-label" ng-bind="::translation.filename"></label>
 					<div class="controls">
-						<input id="importFileUpload" type="file" nv-file-select uploader="uploader" filters="customFilter" required/>
+						<span class="btn fileinput-button">
+		                    <span ng-bind="::translation.selectFile"></span>
+		                    <input id="importFileUpload" type="file" nv-file-select uploader="uploader" filters="customFilter" required/>
+		                </span>
+		                <span ng-bind="selectedFile"></span>
+						<!--<input id="importFileUpload" type="file" nv-file-select uploader="uploader" filters="customFilter" required/>-->
 						<span ng-show="uploader.isUploading">{{uploader.progress}} %</span> 
 						<span class="help-inline text-error" ng-show="isFileuploadInfo" ng-bind="::translation.info"></span> 
 						<span class="help-inline text-error" ng-show="isFileuploadWarning" ng-bind="::translation.warning"></span> 

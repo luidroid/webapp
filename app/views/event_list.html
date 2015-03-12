@@ -1,13 +1,14 @@
-<legend>
-  <h2><span ng-bind="::translation.title"></span></h2>
-</legend>
-
 <div class="row-fluid">
-  <div class="span12">    
+  <div class="span12"> 
+   <div class="well well-kabaWhite">
+    <legend ng-bind="::translation.title"></legend>     
     <!-- Messages template -->
-    <div ng-include="'views/message_template.html'"></div>
-    
-    <!--<p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</p>-->
+    <div class="alert alert-block alert-info" ng-show="isInfo">
+      <ul>
+        <li ng-bind="::translation.infoMessage"></li>
+      </ul>
+    </div>
+    <p ng-hide="isLoading"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</p>
         
     <div class="widget" ng-hide="isEmpty">
       <div class="widget-header">
@@ -20,7 +21,7 @@
       </div>
       <div class="widget-table">
         <div class="widget-content">
-         <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy'>
+         <div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0'>
             <table class="table table-hover">
               <thead>
                 <th ng-bind="::translation.counter"></th>
@@ -32,34 +33,33 @@
                 <th ng-bind="::translation.messageId"></th>               
                 <th ng-bind="::translation.message"></th>
                 <th ng-bind="::translation.entries"></th>
-                <th>test</th>
               </thead>
               <tbody>
                 <tr ng-repeat="item in items">
-                <td ng-bind="::item.id"></td>
-                <td ng-bind="::item.timestamp"></td>                                            
-                <td ng-bind="::item.priority"></td>
-                <td ng-bind="::item.source"></td>
-                <td ng-bind="::item.groups"></td>
-                <td ng-bind="::item.logLevelValue"></td>
-                <td ng-bind="::item.messageId"></td>                                            
-                <td ng-bind="::item.message"></td>
-                <td>
-                  <ul ng-repeat="entry in item.entries">
-                    <li>{{::entry.name}}: {{::entry.value}}</li>
-                  </ul> 
-                </td>
-                <td><div style='clear: both;'></div></td>
+                  <td ng-bind="::item.id"></td>
+                  <td ng-bind="::item.timestamp"></td>                                            
+                  <td ng-bind="::item.priority"></td>
+                  <td ng-bind="::item.source"></td>
+                  <td ng-bind="::item.groups"></td>
+                  <td ng-bind="::item.logLevelValue"></td>
+                  <td ng-bind="::item.messageId"></td>                                            
+                  <td ng-bind="::item.message"></td>
+                  <td>
+                    <ul ng-repeat="entry in item.entries">
+                      <li>{{::entry.name}}: {{::entry.value}}</li>
+                    </ul> 
+                  </td>
                 </tr>
-
               </tbody>
             </table>
-
-          <div ng-show="busy"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</div>       
+           <div style='clear: both;'></div>
+          <div  ng-hide="isFirstEvent">
+            <div ng-show="busy"><img src="images/ajax-loader.gif" alt="Loading">{{::translation.loading}}</div>       
+          </div>
         </div>        
        </div>    
       </div>
     </div>
-                               
+   </div>                            
   </div>
 </div>
